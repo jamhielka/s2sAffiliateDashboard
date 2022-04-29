@@ -14,13 +14,23 @@
     <v-list dense nav>
       <!---USer Area -->
       <v-list-item two-line class="px-0">
-        <v-list-item-avatar>
+        <!-- <v-list-item-avatar>
           <img src="https://randomuser.me/api/portraits/men/81.jpg" />
-        </v-list-item-avatar>
-
-        <v-list-item-content>
-          <v-list-item-title>Admin</v-list-item-title>
-        </v-list-item-content>
+        </v-list-item-avatar> -->
+        <v-row>
+          <v-col cols="12">
+            <v-list-item-content>
+              <v-list-item-title>{{ UsernameDisplay }}</v-list-item-title>
+            </v-list-item-content>
+          </v-col>
+          <v-col cols="12">
+            <card-widget
+              icon="mdi-currency-usd"
+              label="Revenue"
+              :value="loadingData ? 0 : commission"
+            ></card-widget>
+          </v-col>
+        </v-row>
       </v-list-item>
       <!---USer Area -->
       <!---Sidebar Items -->
@@ -46,10 +56,12 @@
 
 <script>
 import { mapState } from "vuex";
-
+import CardWidget from "../../components/CardWidget.vue";
 export default {
   name: "Sidebar",
-
+  components: {
+    CardWidget,
+  },
   props: {
     expandOnHover: {
       type: Boolean,
@@ -57,6 +69,7 @@ export default {
     },
   },
   data: () => ({
+    loadingData: true,
     items: [
       {
         title: "Home",
@@ -64,12 +77,12 @@ export default {
         to: "/admin",
       },
 
-       {
+      {
         title: "Affiliate Link",
         icon: "mdi-table-column-width",
         to: "/trackinglink",
       },
-       {
+      {
         title: "Cash-out Transaction",
         icon: "mdi-table-column-width",
         to: "/cashout",
@@ -78,8 +91,12 @@ export default {
         title: "Profile",
         icon: "mdi-table-column-width",
         to: "/profile",
-      }
+      },
     ],
+    ReportReqItem: {
+      userid: "",
+    },
+    commission: "",
   }),
   computed: {
     ...mapState({
@@ -94,14 +111,44 @@ export default {
         this.$store.commit("SET_SIDEBAR_DRAWER", val);
       },
     },
+    UsernameDisplay() {
+      return this.$store.getters.getUsername;
+      // format/do something with date
+    },
   },
   watch: {
     "$vuetify.breakpoint.smAndDown"(val) {
       this.$emit("update:expandOnHover", !val);
     },
   },
+  created() {
+    this.initialize();
+  },
+  methods: {
+    initialize() {
+      this.getReportList();
+    },
 
-  methods: {},
+    async getReportList() {
+      var userid = localStorage.getItem("userid");
+      this.ReportReqItem.userid = userid;
+      //console.log(TToken);
+      await this.$api
+        .post("/Affiliate/UserCommision", this.ReportReqItem, {})
+
+        .then((response) => {
+          //  console.log(response);
+          const newArr = response.data.data[0];
+          this.commission = newArr.Commission;
+          this.loadingData = false;
+          //this.table.loading = false;
+        })
+        .catch((e) => {
+          //this.table.loading = false;
+          console.log(e);
+        });
+    },
+  },
 };
 </script>
 <style lang="scss">

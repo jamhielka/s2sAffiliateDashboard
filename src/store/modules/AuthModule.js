@@ -6,7 +6,8 @@ export default {
     user: '',
     role: '',
     partner: '',
-    userid:''
+    userid:'',
+    email:''
   },
 
   mutations: {
@@ -20,7 +21,8 @@ export default {
       state.user =payload.firstname;
       state.role = "";
       state.partner = "";
-      state.userid=payload.UserID
+      state.userid=payload.UserID;
+      state.email=payload.email;
     },
     auth_error(state) {
       state.status = "error";
@@ -99,7 +101,7 @@ export default {
   //    return state.role;
   //  },
     getUsername: state => {
-      return state.user
+      return state.email
     },
     //getPartner: state => {
     //  return state.partner
