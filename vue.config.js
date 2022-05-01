@@ -6,5 +6,5 @@ module.exports = {
       });
     },
     transpileDependencies: ["vuetify"],
-    publicPath: "http://affiliate.surf2sawa.com/dashboard/",
+    publicPath: "/dashboard/",
   };
