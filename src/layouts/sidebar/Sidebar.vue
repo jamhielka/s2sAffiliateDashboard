@@ -84,12 +84,12 @@ export default {
       },
       {
         title: "Cash-out Transaction",
-        icon: "mdi-table-column-width",
+        icon: "mdi-account-cash",
         to: "/cashout",
       },
       {
         title: "Profile",
-        icon: "mdi-table-column-width",
+        icon: "mdi-account-box",
         to: "/profile",
       },
     ],
