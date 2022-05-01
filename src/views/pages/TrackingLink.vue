@@ -11,7 +11,7 @@
         <v-toolbar-title>Affiliate Link</v-toolbar-title>
         <v-divider class="mx-4" inset vertical></v-divider>
         <v-spacer></v-spacer>
-          <v-text-field
+        <v-text-field
           v-model="search"
           append-icon="mdi-magnify"
           label="Search"
@@ -19,15 +19,15 @@
           hide-details
         ></v-text-field>
 
-         <v-btn color="primary" dark class="mb-2"   @click="GeneratedLinkBTN()">
-              Add Link
-            </v-btn>
+        <v-btn color="primary" dark class="mb-2" @click="GeneratedLinkBTN()">
+          Add Link
+        </v-btn>
 
-              <GenerateLinkDialog
-            :data="approveData"
-            :dialog="editDialog.dialog"
-            @close="editDialog.dialog = !editDialog.dialog"
-          ></GenerateLinkDialog>
+        <GenerateLinkDialog
+          :data="approveData"
+          :dialog="editDialog.dialog"
+          @close="editDialog.dialog = !editDialog.dialog"
+        ></GenerateLinkDialog>
         <!-- <v-dialog v-model="dialog" max-width="500px">
           <template >
             <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on"  @click="GeneratedLinkBTN()">
@@ -94,56 +94,55 @@
       <v-btn color="primary" @click="initialize"> Reset </v-btn>
     </template>
   </v-data-table>
-
 </template>
 <script>
 import GenerateLinkDialog from "../dialogs/GenerateLink.vue";
 export default {
-          components: {
+  components: {
     GenerateLinkDialog,
   },
   data: () => ({
-        GenerateLinkDialog: { dialog: false },
-         editDialog: { dialog: false },
-        search: "",
-   dialog: false,
+    GenerateLinkDialog: { dialog: false },
+    editDialog: { dialog: false },
+    search: "",
+    dialog: false,
     dialogDelete: false,
     headers: [
       {
         text: "Social Media",
         align: "start",
         sortable: true,
-        value: "socialMedia",
+        value: "SocialMedia",
       },
       {
-        text: "Click ID",
+        text: "Affiliate Link",
         align: "start",
         sortable: false,
-        value: "clickID",
+        value: "LINK",
       },
-      { text: "Link", value: "link" },
+      { text: "Clicks", value: "CLICKS" },
+      { text: "Sign-Up", value: "SIGNUP" },
+      { text: "Activated", value: "ACTIVATED" },
+      { text: "Revenue", value: "REVENUE" },
       { text: "Date/Time", value: "dtCreated" },
-      { text: "Actions", value: "actions", sortable: false },
+      // { text: "Actions", value: "actions", sortable: false },
     ],
     desserts: [],
     editedIndex: -1,
     editedItem: {
-    
       name: "",
       code: "",
     },
     defaultItem: {
-    
       name: "",
       code: "",
     },
-     GetRequest: {
-    
+    GetRequest: {
       userid: "",
-      
     },
+    approveData:[]
   }),
-
+ 
   computed: {
     formTitle() {
       return this.editedIndex === -1 ? "New Item" : "Edit Item";
@@ -169,14 +168,14 @@ export default {
     },
     async getForMerchantList() {
       // this.table.loading = true;
-     // var TToken = localStorage.getItem("token");
-     var userid = localStorage.getItem("userid");
-        this.GetRequest.userid=userid;
+      // var TToken = localStorage.getItem("token");
+      var userid = localStorage.getItem("userid");
+      this.GetRequest.userid = userid;
       await this.$api
-        .post("/Affiliate/GetLink",this.GetRequest,  {
-        //   headers: {
-        //     Authorization: TToken,
-        //   },
+        .post("/Affiliate/GetLinkReport", this.GetRequest, {
+          //   headers: {
+          //     Authorization: TToken,
+          //   },
         })
 
         .then((response) => {
@@ -191,7 +190,6 @@ export default {
         });
     },
     editItem(item) {
-     
       this.editedIndex = this.desserts.indexOf(item);
       this.editedItem = Object.assign({}, item);
 
@@ -199,7 +197,6 @@ export default {
     },
 
     deleteItem(item) {
-    
       this.editedIndex = this.desserts.indexOf(item);
       this.editedItem = Object.assign({}, item);
       console.log(this.editedItem);
@@ -208,13 +205,16 @@ export default {
 
     deleteItemConfirm() {
       var TToken = localStorage.getItem("token");
-   console.log("deleteItemConfirm "+ this.editedItem._item);
+      console.log("deleteItemConfirm " + this.editedItem._item);
       // this.desserts.splice(this.editedIndex, 1);
       this.$api
-        .delete("/admin/designations", {
-          headers: {
-            Authorization: TToken,
-          }},
+        .delete(
+          "/admin/designations",
+          {
+            headers: {
+              Authorization: TToken,
+            },
+          },
           this.editedItem
         )
         .then((response) => {
@@ -284,7 +284,7 @@ export default {
 
             this.dialog = false;
             alert("Designations is successfully created");
-            this.initialize()
+            this.initialize();
           })
           .catch((e) => {
             console.log(e);
@@ -294,7 +294,6 @@ export default {
       this.close();
     },
     GeneratedLinkBTN() {
-
       this.editDialog.dialog = true;
     },
   },

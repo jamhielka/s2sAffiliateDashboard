@@ -127,7 +127,7 @@ export default {
       { text: "is Approved", value: "isApproved" },
        { text: "Approved By", value: "ApprovedBy" },
         { text: "Date Approved", value: "dtApproved" },
-      { text: "Actions", value: "actions", sortable: false },
+      //{ text: "Actions", value: "actions", sortable: false },
     ],
     desserts: [],
     editedIndex: -1,
