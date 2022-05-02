@@ -23,7 +23,6 @@
             >
               Affiliate Information
             </h3>
-            
           </v-card-text>
           <v-divider></v-divider>
           <v-card-text>
@@ -49,7 +48,6 @@
             <v-text-field
               type="date"
               class="form-control"
-            
               placeholder="Enter your Date of Birth"
               v-model="editedItem.dob"
             ></v-text-field>
@@ -130,7 +128,10 @@
               placeholder="Enter your Address"
               v-model="editedItem.address"
             ></v-textarea>
-            <v-btn class="text-capitalize mt-5 element-0" color="success"
+            <v-btn
+              class="text-capitalize mt-5 element-0"
+              color="success"
+              @click="save()"
               >Submit</v-btn
             >
           </v-card-text>
@@ -194,8 +195,7 @@ export default {
       this.getAffiliateInfo();
       //var xregion = this.editedItem.region;
       var xprovince = this.editedItem.province;
-console.log(xprovince);
-
+      console.log(xprovince);
     },
     async getAffiliateInfo() {
       // this.table.loading = true;
@@ -212,31 +212,33 @@ console.log(xprovince);
         .then((response) => {
           console.log(response.data.data[0]);
           this.editedItem = response.data.data[0];
-this.selectedRegion=this.editedItem.region;
-this.selectedProvince=this.editedItem.province;
-this.editedItem.dob=moment(this.editedItem.dob).format("YYYY-MM-DD");
-this.editedItem.city=response.data.data[0].city;
-this.editedItem.userid=userid;
-let prov=this.selectedProvince;
-      var valObj = this.listState.filter(function (elem) {
-        if (elem.name == prov) return elem._id;
-      });
+          this.selectedRegion = this.editedItem.region;
+          this.selectedProvince = this.editedItem.province;
+          this.editedItem.dob = moment(this.editedItem.dob).format(
+            "YYYY-MM-DD"
+          );
+          this.editedItem.city = response.data.data[0].city;
+          this.editedItem.userid = userid;
+          let prov = this.selectedProvince;
+          var valObj = this.listState.filter(function (elem) {
+            if (elem.name == prov) return elem._id;
+          });
 
-       axios 
-        .get(
-          `http://52.220.32.14:10210/api/cities?provinceId=${valObj[0]._id}`,
-          {
-            //headers: {
-            //  Authorization: `Bearer ${this.authToken}`,
-            //   Accept: "application/json",
-            // },
-          }
-        )
-        .then((res) => {
-          this.listCities = res.data.data.cities;
-          this.editedItem.province = this.prov.name;
-        });
-//this.editedItem.city=this.editedItem.city;
+          axios
+            .get(
+              `http://52.220.32.14:10210/api/cities?provinceId=${valObj[0]._id}`,
+              {
+                //headers: {
+                //  Authorization: `Bearer ${this.authToken}`,
+                //   Accept: "application/json",
+                // },
+              }
+            )
+            .then((res) => {
+              this.listCities = res.data.data.cities;
+              this.editedItem.province = this.prov.name;
+            });
+          //this.editedItem.city=this.editedItem.city;
 
           //this.table.loading = false;
         })
@@ -312,26 +314,26 @@ let prov=this.selectedProvince;
     },
     save() {
       // var TToken = localStorage.getItem("token");
-   
-        this.$api
-          .put("/admin/UInfo", this.editedItem, {
-            // headers: {
-            //   Authorization: TToken,
-            // },
-          })
-          .then((response) => {
-            console.log(response);
-            //this.$emit("obj", true);
-            // this.loadingBtn = false;
+      this.editedItem.region = this.selectedRegion;
+      this.editedItem.province = this.selectedProvince;
+      this.$api
+        .put("/admin/UInfo", this.editedItem, {
+          // headers: {
+          //   Authorization: TToken,
+          // },
+        })
+        .then((response) => {
+          console.log(response);
+          //this.$emit("obj", true);
+          // this.loadingBtn = false;
 
-            this.dialog = false;
-            alert("User info is successfully saved");
-          })
-          .catch((e) => {
-            console.log(e);
-            //this.loadingBtn = false;
-          });
-      
+          this.dialog = false;
+          alert("User info is successfully saved");
+        })
+        .catch((e) => {
+          console.log(e);
+          //this.loadingBtn = false;
+        });
     },
   },
 };

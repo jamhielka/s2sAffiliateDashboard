@@ -11,14 +11,20 @@
                 <!-- <label for="Name">Employee Name: {{ scheduleItem.Name }}</label> -->
               </v-col>
               <v-col cols="12">
-                <v-select
+                <!-- <v-select
                   v-model="scheduleItem.socialMedia"
                   :items="listShift"
                   item-text="name"
                   item-value="code"
                   label="Select your  Social Media"
                   required
-                ></v-select>
+                ></v-select> -->
+                <v-text-field
+              type="text"
+              class="form-control"
+              placeholder="Enter name of link"
+              v-model="scheduleItem.socialMedia"
+            ></v-text-field>
               </v-col>
 
            

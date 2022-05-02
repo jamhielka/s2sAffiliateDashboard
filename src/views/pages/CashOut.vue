@@ -24,7 +24,7 @@
             </v-btn>
 
               <GenerateLinkDialog
-            :data="approveData"
+         
             :dialog="editDialog.dialog"
             @close="editDialog.dialog = !editDialog.dialog"
           ></GenerateLinkDialog>
