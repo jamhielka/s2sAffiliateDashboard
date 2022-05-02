@@ -21,7 +21,7 @@
             <h3
               class="title blue-grey--text text--darken-2 font-weight-regular"
             >
-              Affiliate Information
+            Profile
             </h3>
           </v-card-text>
           <v-divider></v-divider>
@@ -173,6 +173,7 @@ export default {
       province: "",
       city: "",
       address: "",
+      userid:""
     },
     GetRequest: {
       userid: "",
@@ -314,10 +315,12 @@ export default {
     },
     save() {
       // var TToken = localStorage.getItem("token");
-      this.editedItem.region = this.selectedRegion;
-      this.editedItem.province = this.selectedProvince;
+           var userid = localStorage.getItem("userid");
+      this.editedItem.region = this.selectedRegion.name;
+      this.editedItem.province = this.selectedProvince.name;
+      this.editedItem.userid=userid;
       this.$api
-        .put("/admin/UInfo", this.editedItem, {
+        .post("/Affiliate/UInfo", this.editedItem, {
           // headers: {
           //   Authorization: TToken,
           // },
