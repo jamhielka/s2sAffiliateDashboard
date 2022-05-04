@@ -17,22 +17,39 @@
         <!-- <v-list-item-avatar>
           <img src="https://randomuser.me/api/portraits/men/81.jpg" />
         </v-list-item-avatar> -->
-        <v-row>
-          <v-col cols="12">
-            <v-list-item-content>
-              <v-list-item-title>{{ UsernameDisplay }}</v-list-item-title>
-            </v-list-item-content>
-          </v-col>
-          <v-col cols="12">
-            <card-widget
-              icon="mdi-currency-usd"
-              label="Revenue"
-              :value="loadingData ? 0 : commission"
-            ></card-widget>
-          </v-col>
-        </v-row>
+    
+
+          <v-list-item-icon>
+          <v-icon>mdi-account</v-icon>
+        </v-list-item-icon>
+
+        <v-list-item-content>
+          <v-list-item-title>{{ UsernameDisplay }}</v-list-item-title>
+        </v-list-item-content>
+        
       </v-list-item>
       <!---USer Area -->
+      <!--REVENUE-->
+      <v-list-item>
+           <v-list-item-icon>
+          <v-icon>mdi-currency-php</v-icon>
+        </v-list-item-icon>
+
+        <v-list-item-content>
+          <v-list-item-title>Revenue</v-list-item-title>
+           <v-list-item-content>{{ formatPrice(commission) }}</v-list-item-content>
+           <v-list-item-action><v-btn
+              x-small
+              color="primary"
+              dark @click="CashoutBTN()"
+            >
+             Cash-Out
+            </v-btn></v-list-item-action>
+             
+        </v-list-item-content>
+      </v-list-item>
+           <!--REVENUE-->
+           <hr/>
       <!---Sidebar Items -->
       <v-list-item
         v-for="item in items"
@@ -51,16 +68,22 @@
       </v-list-item>
       <!---Sidebar Items -->
     </v-list>
+         <CashOutDialog
+         
+            :dialog="editDialog.dialog"
+            @close="editDialog.dialog = !editDialog.dialog"
+          ></CashOutDialog>
   </v-navigation-drawer>
 </template>
 
 <script>
 import { mapState } from "vuex";
-import CardWidget from "../../components/CardWidget.vue";
+import CashOutDialog from "../../views/dialogs/CashOutDialog.vue";
+//import CardWidget from "../../components/CardWidget.vue";
 export default {
   name: "Sidebar",
   components: {
-    CardWidget,
+      CashOutDialog,
   },
   props: {
     expandOnHover: {
@@ -69,6 +92,8 @@ export default {
     },
   },
   data: () => ({
+        CashOutDialog: { dialog: false },
+         editDialog: { dialog: false },
     loadingData: true,
     items: [
       {
@@ -147,7 +172,15 @@ export default {
           //this.table.loading = false;
           console.log(e);
         });
+  },  
+     CashoutBTN() {
+
+      this.editDialog.dialog = true;
     },
+      formatPrice(value) {
+        let val = (value/1);
+        return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+    }
   },
 };
 </script>

@@ -67,7 +67,7 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-   <v-dialog v-model="GenerateLinkdialog" max-width="500px">
+   <!-- <v-dialog v-model="GenerateLinkdialog" max-width="500px">
       <v-card>
         <v-card-title class="text-h6">
             <p>Congratulation! You now have your own link to share to your friends.</p>
@@ -107,7 +107,7 @@
           <v-spacer></v-spacer>
         </v-card-actions>
       </v-card>
-    </v-dialog>
+    </v-dialog> -->
   
   </div>
 </template>
@@ -189,7 +189,7 @@ export default {
     SchedItemConfirm() {
     
   var userid = localStorage.getItem("userid");
-        this.scheduleItem.userid=userid;
+        this.scheduleItem.userId=userid;
         console.log("code", this.scheduleItem.socialMedia);
   this.$api
         .post("/Affiliate/Payout",this.scheduleItem, {
@@ -201,8 +201,12 @@ export default {
         .then((response) => {
             console.log(response.data.data[0].TrackingLink);
             this.generatedlink= response.data.data[0].TrackingLink;
-          this.GenerateLinkdialog= true;
+          //this.GenerateLinkdialog= true;
 
+ var r = confirm("Payout Request has been submitted");
+    if (r == true){
+      window.location.reload();
+    }
          
         })
         .catch((e) => {
