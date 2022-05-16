@@ -6,5 +6,5 @@ module.exports = {
       });
     },
     transpileDependencies: ["vuetify"],
-    publicPath: "/dashboard",
+    publicPath: "/",
   };
