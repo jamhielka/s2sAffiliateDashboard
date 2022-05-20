@@ -27,29 +27,19 @@ let router = new Router({
           component: () => import("@/views/auth/Registration"),
           // meta: { authorize: [] }
         },
+
+        {
+          name: "Forgot",
+          path: "/Forgot",
+          component: () => import("@/views/auth/Forgot"),
+        },
+        {
+          name: "Change Password",
+          path: "/ChangePassword",
+          component: () => import("@/views/auth/ChangePassword"),
+        },
       ],
     },
-
-    // {
-    //   name: "HomePage",
-    //   path: "/",
-    //   component: () => import("@/views/auth/Login"),
-    //   // meta: { authorize: [] }
-    // },
-
-    // {
-    //   name: "Login",
-    //   path: "/login",
-    //   // redirect: '/login',
-    //   component: () => import("@/views/auth/Login"),
-    //   // meta: { authorize: [] }
-    // },
-    // {
-    //   name: "Registration",
-    //   path: "/register",
-    //   component: () => import("@/views/auth/Registration"),
-    //   // meta: { authorize: [] }
-    // },
 
     {
       name: "AdminRoutes",
@@ -91,6 +81,58 @@ let router = new Router({
           name: "Events",
           path: "/events",
           component: () => import("@/views/pages/Games"),
+        },
+
+        {
+          name: "TableSimple",
+          path: "/tables-simple",
+          component: () => import("@/views/pages/TableSimple"),
+        },
+        {
+          name: "Add Employee",
+          path: "/addEmployee",
+          component: () => import("@/views/pages/addEmployee"),
+        },
+        {
+          name: "Department",
+          path: "/department",
+          component: () => import("@/views/pages/department"),
+        },
+
+        {
+          name: "Designations",
+          path: "/designations",
+          component: () => import("@/views/pages/designations"),
+        },
+        {
+          name: "Job Status",
+          path: "/jobStatus",
+          component: () => import("@/views/pages/jobStatus"),
+        },
+        {
+          name: "Shifts",
+          path: "/shifts",
+          component: () => import("@/views/pages/Shifts"),
+        },
+        {
+          name: "Holiday",
+          path: "/holiday",
+          component: () => import("@/views/pages/Holiday"),
+        },
+        {
+          name: "Employee",
+          path: "/employee",
+          component: () => import("@/views/pages/employee"),
+        },
+        {
+          name: "Schedule",
+          path: "/schedule",
+          component: () => import("@/views/pages/schedule"),
+        },
+        {
+          name: "Scheduling",
+          path: "/scheduling",
+          component: () => import("@/views/pages/scheduling"),
         },
 
         {
