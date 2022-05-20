@@ -7,40 +7,6 @@
           <v-container>
             <v-row>
               <v-col cols="12">
-                 <div class="form-group">
-            <v-label for="suffix">Amount</v-label>
-            <v-text-field
-              type="text"
-              class="form-control"
-              placeholder="Enter Amount to cash out"
-              v-model="scheduleItem.amount"
-            ></v-text-field>
-          </div>
-              </v-col>
-              <v-col cols="12">
-                 <div class="form-group">
-            <v-label for="suffix">Account Name</v-label>
-            <v-text-field
-              type="text"
-              class="form-control"
-              placeholder="Enter Account Name"
-              v-model="scheduleItem.accountName"
-            ></v-text-field>
-          </div>
-              </v-col>
-  <v-col cols="12">
-                 <div class="form-group">
-            <v-label for="suffix">Account Number</v-label>
-            <v-text-field
-              type="text"
-              class="form-control"
-              placeholder="Enter Account Number"
-              v-model="scheduleItem.accountNumber"
-            ></v-text-field>
-          </div>
-              </v-col>
-
-              <v-col cols="12">
                 <v-select
                   v-model="scheduleItem.paymentType"
                   :items="listShift"
@@ -50,9 +16,40 @@
                   required
                 ></v-select>
               </v-col>
-
            
-              
+              <v-col cols="12">
+                <div class="form-group">
+                  <v-label for="suffix">Account Number</v-label>
+                  <v-text-field
+                    type="text"
+                    class="form-control"
+                    placeholder="Enter Account Number"
+                    v-model="scheduleItem.accountNumber"
+                  ></v-text-field>
+                </div>
+              </v-col>
+                 <v-col cols="12">
+                <div class="form-group">
+                  <v-label for="suffix">Account Name</v-label>
+                  <v-text-field
+                    type="text"
+                    class="form-control"
+                    placeholder="Enter Account Name"
+                    v-model="scheduleItem.accountName"
+                  ></v-text-field>
+                </div>
+              </v-col>
+              <v-col cols="12">
+                <div class="form-group">
+                  <v-label for="suffix">Amount</v-label>
+                  <v-text-field
+                    type="text"
+                    class="form-control"
+                    placeholder="Enter Amount to cash out"
+                    v-model="scheduleItem.amount"
+                  ></v-text-field>
+                </div>
+              </v-col>
             </v-row>
           </v-container>
         </v-card-text>
@@ -67,7 +64,7 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-   <!-- <v-dialog v-model="GenerateLinkdialog" max-width="500px">
+    <!-- <v-dialog v-model="GenerateLinkdialog" max-width="500px">
       <v-card>
         <v-card-title class="text-h6">
             <p>Congratulation! You now have your own link to share to your friends.</p>
@@ -108,7 +105,6 @@
         </v-card-actions>
       </v-card>
     </v-dialog> -->
-  
   </div>
 </template>
 
@@ -118,7 +114,6 @@
 //import moment from "moment";
 
 export default {
-
   data: () => ({
     textFieldProps: {
       prependIcon: "mdi-calendar-month-outline",
@@ -131,22 +126,20 @@ export default {
 
     listShift: [],
     scheduleItem: {
-    
-      
-      userId:"",
+      userId: "",
       accountName: "",
-      accountNumber:"",
-      paymentType:"",
-      amount:""
+      accountNumber: "",
+      paymentType: "",
+      amount: "",
     },
     defaultItem: {
       name: "",
       code: "",
     },
-    generatedlink:"",
+    generatedlink: "",
     modalScheduleDate: false,
     _id: "",
-    GenerateLinkdialog:false
+    GenerateLinkdialog: false,
   }),
   props: ["data", "dialog"],
 
@@ -156,19 +149,17 @@ export default {
       // ,this.$props.data.employeeId);
       this.loadShift();
       this.scheduleItem.userid = this.$props.data.userid;
-   
     },
   },
 
   methods: {
     loadShift() {
-  
-     // console.log(TToken);
+      // console.log(TToken);
       this.$api
         .post("/Affiliate/PaymentChannel", {
-        //   headers: {
-        //     Authorization: TToken,
-        //   },
+          //   headers: {
+          //     Authorization: TToken,
+          //   },
         })
 
         .then((response) => {
@@ -187,45 +178,42 @@ export default {
       this.$emit("close", false);
     },
     SchedItemConfirm() {
-    
-  var userid = localStorage.getItem("userid");
-        this.scheduleItem.userId=userid;
-        console.log("code", this.scheduleItem.socialMedia);
-  this.$api
-        .post("/Affiliate/Payout",this.scheduleItem, {
-        //   headers: {
-        //     Authorization: TToken,
-        //   },
+      var userid = localStorage.getItem("userid");
+      this.scheduleItem.userId = userid;
+      console.log("code", this.scheduleItem.socialMedia);
+      this.$api
+        .post("/Affiliate/Payout", this.scheduleItem, {
+          //   headers: {
+          //     Authorization: TToken,
+          //   },
         })
 
         .then((response) => {
-            console.log(response.data.data[0].TrackingLink);
-            this.generatedlink= response.data.data[0].TrackingLink;
+          console.log(response.data.data[0]);
+          //this.generatedlink= response.data.data[0].TrackingLink;
           //this.GenerateLinkdialog= true;
 
- var r = confirm("Payout Request has been submitted");
-    if (r == true){
-      window.location.reload();
-    }
-         
+          var r = confirm(response.data.data[0].Message);
+          if (r == true) {
+            window.location.reload();
+          }
         })
         .catch((e) => {
           //this.table.loading = false;
           console.log(e);
         });
-        
 
       this.close();
     },
-    
+
     closeDelete() {
       this.GenerateLinkdialog = false;
-       this.dialog = false;
+      this.dialog = false;
     },
     copy() {
-        this.$refs.clone.focus();
-      document.execCommand('copy');
-      }
+      this.$refs.clone.focus();
+      document.execCommand("copy");
+    },
   },
 };
 </script>

@@ -111,21 +111,21 @@ export default {
       {
         text: "Social Media",
         align: "start",
-        sortable: true,
+      
         value: "SocialMedia",
       },
       {
         text: "Affiliate Link",
         align: "start",
-        sortable: false,
+     
         value: "LINK",
       },
       { text: "Clicks", value: "CLICKS" },
       { text: "Sign-Up", value: "SIGNUP" },
       { text: "Activated", value: "ACTIVATED" },
-      { text: "Revenue", value: "REVENUE" },
-      { text: "Date/Time", value: "dtCreated" },
-      // { text: "Actions", value: "actions", sortable: false },
+      { text: "Revenue", value: "REVENUE"  , sortable: true, },
+      { text: "Date/Time", value: "dtCreated", },
+     { text: "Actions", value: "actions", sortable: false },
     ],
     desserts: [],
     editedIndex: -1,

@@ -245,8 +245,8 @@ export default {
           const newArr = response.data.data;
           console.log(newArr);
           for (let i = 0; i < newArr.length; i++) {
-            this.Seriesdata.push(response.data.data[i].TCOUNT);
-            this.LineSeriesdata.push(response.data.data[i].TCOUNT);
+           this.Seriesdata.push(response.data.data[i].TCOUNT);
+            //this.LineSeriesdata.push(response.data.data[i].TCOUNT);
 
             this.chartOptions.labels.push(response.data.data[i].TDATE);
           }
@@ -254,10 +254,10 @@ export default {
           this.SeriesItem.type = "column";
           this.SeriesItem.data = this.Seriesdata;
 
-          this.LineSeriesItem.name = "SignUp";
-          this.LineSeriesItem.type = "line";
-          this.LineSeriesItem.data = this.LineSeriesdata;
-          this.series.push(this.LineSeriesItem);
+          // this.LineSeriesItem.name = "SignUp";
+          // this.LineSeriesItem.type = "line";
+          // this.LineSeriesItem.data = this.LineSeriesdata;
+          // this.series.push(this.LineSeriesItem);
           this.series.push(this.SeriesItem);
           console.log(this.series);
           console.log(this.labels);

@@ -19,16 +19,26 @@
                   label="Select your  Social Media"
                   required
                 ></v-select> -->
-                <v-text-field
+                <!-- <v-text-field
               type="text"
               class="form-control"
               placeholder="Enter name of link"
               v-model="scheduleItem.socialMedia"
-            ></v-text-field>
-              </v-col>
+                 required
 
-           
-              
+                 
+            ></v-text-field> -->
+
+                <v-text-field
+                  ref="name"
+                  v-model="scheduleItem.socialMedia"
+                  :rules="[() => !!name || 'This field is required']"
+                  :error-messages="errorMessages"
+                  label="Name"
+                  placeholder="Name of Link"
+                  required
+                ></v-text-field>
+              </v-col>
             </v-row>
           </v-container>
         </v-card-text>
@@ -43,48 +53,42 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-   <v-dialog v-model="GenerateLinkdialog" max-width="500px">
+    <v-dialog v-model="GenerateLinkdialog" max-width="500px">
       <v-card>
         <v-card-title class="text-h6">
-            <p>Congratulation! You now have your own link to share to your friends.</p>
-</v-card-title>
+          <p>
+            Congratulation! You now have your own link to share to your friends.
+          </p>
+        </v-card-title>
         <v-card-text>
           <v-container>
             <v-row>
-           
-  <v-col cols="12">
-      <label>Link:</label>
-                <input  type="label"
-           v-on:focus="$event.target.select()" 
-           ref="clone" 
-           readonly 
-           :value="generatedlink"
-           style="width: 250px;"
-           />
+              <v-col cols="12">
+                <label>Link:</label>
+                <input
+                  type="label"
+                  v-on:focus="$event.target.select()"
+                  ref="clone"
+                  readonly
+                  :value="generatedlink"
+                  style="width: 250px"
+                />
 
-           <v-btn
-              icon
-              color="red"
-            @click="copy">
-              <v-icon>mdi-content-copy</v-icon>
-            </v-btn>
+                <v-btn icon color="red" @click="copy">
+                  <v-icon>mdi-content-copy</v-icon>
+                </v-btn>
               </v-col>
-           
- 
-              
             </v-row>
           </v-container>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="blue darken-1" text @click="closeDelete()">Close</v-btn>
-          
 
           <v-spacer></v-spacer>
         </v-card-actions>
       </v-card>
     </v-dialog>
-  
   </div>
 </template>
 
@@ -94,7 +98,6 @@
 //import moment from "moment";
 
 export default {
-
   data: () => ({
     textFieldProps: {
       prependIcon: "mdi-calendar-month-outline",
@@ -107,18 +110,17 @@ export default {
 
     listShift: [],
     scheduleItem: {
-    
       socialMedia: "",
-      userid:"",
+      userid: "",
     },
     defaultItem: {
       name: "",
       code: "",
     },
-    generatedlink:"",
+    generatedlink: "",
     modalScheduleDate: false,
     _id: "",
-    GenerateLinkdialog:false
+    GenerateLinkdialog: false,
   }),
   props: ["data", "dialog"],
 
@@ -128,19 +130,17 @@ export default {
       // ,this.$props.data.employeeId);
       this.loadShift();
       this.scheduleItem.userid = this.$props.data.userid;
-   
     },
   },
 
   methods: {
     loadShift() {
-  
-     // console.log(TToken);
+      // console.log(TToken);
       this.$api
         .post("/Affiliate/SocialMedia", {
-        //   headers: {
-        //     Authorization: TToken,
-        //   },
+          //   headers: {
+          //     Authorization: TToken,
+          //   },
         })
 
         .then((response) => {
@@ -159,41 +159,44 @@ export default {
       this.$emit("close", false);
     },
     SchedItemConfirm() {
-    
-  var userid = localStorage.getItem("userid");
-        this.scheduleItem.userid=userid;
-        console.log("code", this.scheduleItem.socialMedia);
-  this.$api
-        .post("/Affiliate/GenerateLink",this.scheduleItem, {
-        //   headers: {
-        //     Authorization: TToken,
-        //   },
+
+      if (this.scheduleItem.socialMedia=="") {
+       alert("Enter name of link");
+      } 
+      else{
+var userid = localStorage.getItem("userid");
+      this.scheduleItem.userid = userid;
+      console.log("code", this.scheduleItem.socialMedia);
+      this.$api
+        .post("/Affiliate/GenerateLink", this.scheduleItem, {
+          //   headers: {
+          //     Authorization: TToken,
+          //   },
         })
 
         .then((response) => {
-            console.log(response.data.data[0].TrackingLink);
-            this.generatedlink= response.data.data[0].TrackingLink;
-          this.GenerateLinkdialog= true;
-
-         
+          console.log(response.data.data[0].TrackingLink);
+          this.generatedlink = response.data.data[0].TrackingLink;
+          this.GenerateLinkdialog = true;
         })
         .catch((e) => {
           //this.table.loading = false;
           console.log(e);
         });
-        
 
       this.close();
+      }
+      
     },
-    
+
     closeDelete() {
       this.GenerateLinkdialog = false;
-       this.dialog = false;
+      this.dialog = false;
     },
     copy() {
-        this.$refs.clone.focus();
-      document.execCommand('copy');
-      }
+      this.$refs.clone.focus();
+      document.execCommand("copy");
+    },
   },
 };
 </script>

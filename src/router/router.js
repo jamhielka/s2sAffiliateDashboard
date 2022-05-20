@@ -21,7 +21,16 @@ let router = new Router({
 			component: () => import('@/views/auth/Login'),
 			// meta: { authorize: [] }
 		},
-
+        {
+            name: 'Forgot',
+            path: '/Forgot',
+            component: () => import('@/views/auth/Forgot'),
+        },
+        {
+            name: 'Change Password',
+            path: '/ChangePassword',
+            component: () => import('@/views/auth/ChangePassword'),
+        },
         {
             name: 'AdminRoutes',
             path: '/admin',
@@ -116,6 +125,7 @@ let router = new Router({
                     path: '/scheduling',
                     component: () => import('@/views/pages/scheduling'),
                 },
+              
                
             ]
         },

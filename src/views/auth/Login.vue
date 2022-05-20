@@ -28,11 +28,12 @@
                 ></v-text-field>
               </v-form>
             </v-card-text>
-            <v-card-actions class="pb-10">
+            <v-card-actions class="pb-1">
               <v-spacer></v-spacer>
+           
               <v-btn
                 color="primary"
-                class="px-5"
+                class="px-12"
                 @click="login"
                 :disabled="loading"
               >
@@ -44,6 +45,13 @@
                 <span v-if="!loading">Login</span>
                 <span v-if="loading">Logging in</span>
               </v-btn>
+      
+            </v-card-actions>
+             
+            <v-card-actions>
+                          <p class="forgot-password text-right">
+                <router-link to="forgot">Forgot Password</router-link>
+              </p>
             </v-card-actions>
           </v-card>
         </v-flex>
