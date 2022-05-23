@@ -6,6 +6,9 @@
     sort-by="name"
     class="elevation-1"
   >
+    <template v-slot:[`item.dtCreated`]="{ item }">
+    <span>{{ new Date(item.dtCreated).toLocaleString() }}</span>
+  </template>
     <template v-slot:top>
       <v-toolbar flat>
         <v-toolbar-title>Affiliate Link</v-toolbar-title>

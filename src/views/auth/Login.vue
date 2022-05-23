@@ -5,13 +5,13 @@
         <v-flex xs12 sm8 md4>
           <v-card class="elevation-12">
             <v-toolbar dark color="primary">
-              <v-toolbar-title>Login form</v-toolbar-title>
+              <v-toolbar-title>Login</v-toolbar-title>
             </v-toolbar>
             <v-card-text>
               <v-form ref="form" lazy-validation>
                 <v-text-field
                   prepend-icon="mdi-account"
-                  label="Login"
+                  label="Email Address"
                   type="text"
                   v-model="username"
                   :rules="rules.required"
