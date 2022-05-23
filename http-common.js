@@ -12,3 +12,11 @@ export const API = axios.create({
    password: _password
  }
 });
+
+export const LOCATION_API = axios.create({
+  baseURL: "http://52.220.32.14:10210/api",
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
+
