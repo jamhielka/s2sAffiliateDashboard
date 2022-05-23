@@ -4,54 +4,40 @@
       <v-card>
         <v-card-title class="text-h5">Cashout</v-card-title>
         <v-card-text>
-          <v-container>
-            <v-row>
-              <v-col cols="12">
-                <v-select
-                  v-model="scheduleItem.paymentType"
-                  :items="listShift"
-                  item-text="name"
-                  item-value="code"
-                  label="Select Wallet"
-                  required
-                ></v-select>
-              </v-col>
-           
-              <v-col cols="12">
-                <div class="form-group">
-                  <v-label for="suffix">Account Number</v-label>
-                  <v-text-field
-                    type="text"
-                    class="form-control"
-                    placeholder="Enter Account Number"
-                    v-model="scheduleItem.accountNumber"
-                  ></v-text-field>
-                </div>
-              </v-col>
-                 <v-col cols="12">
-                <div class="form-group">
-                  <v-label for="suffix">Account Name</v-label>
-                  <v-text-field
-                    type="text"
-                    class="form-control"
-                    placeholder="Enter Account Name"
-                    v-model="scheduleItem.accountName"
-                  ></v-text-field>
-                </div>
-              </v-col>
-              <v-col cols="12">
-                <div class="form-group">
-                  <v-label for="suffix">Amount</v-label>
-                  <v-text-field
-                    type="text"
-                    class="form-control"
-                    placeholder="Enter Amount to cash out"
-                    v-model="scheduleItem.amount"
-                  ></v-text-field>
-                </div>
-              </v-col>
-            </v-row>
-          </v-container>
+          <v-form ref="form" lazy-validation>
+            <v-select
+              v-model="scheduleItem.paymentType"
+              :items="listShift"
+              item-text="name"
+              item-value="code"
+              label="Select Wallet"
+              :rules="rules.required"
+            ></v-select>
+
+            <v-text-field
+              type="text"
+              class="form-control"
+              label="Account Number"
+              v-model="scheduleItem.accountNumber"
+              :rules="rules.required"
+            ></v-text-field>
+
+            <v-text-field
+              type="text"
+              class="form-control"
+              label="Account Name"
+              v-model="scheduleItem.accountName"
+              :rules="rules.required"
+            ></v-text-field>
+
+            <v-text-field
+              type="number"
+              class="form-control"
+              placeholder="Amount"
+              v-model="scheduleItem.amount"
+              :rules="rules.required"
+            ></v-text-field>
+          </v-form>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -115,14 +101,14 @@
 
 export default {
   data: () => ({
-    textFieldProps: {
-      prependIcon: "mdi-calendar-month-outline",
-      rules: [(value) => !!value || "Required."],
-    },
-    timeProps: {
-      useSeconds: true,
-      ampmInTitle: true,
-    },
+    // textFieldProps: {
+    //   prependIcon: "mdi-calendar-month-outline",
+    //   rules: [(value) => !!value || "Required."],
+    // },
+    // timeProps: {
+    //   useSeconds: true,
+    //   ampmInTitle: true,
+    // },
 
     listShift: [],
     scheduleItem: {
@@ -140,6 +126,9 @@ export default {
     modalScheduleDate: false,
     _id: "",
     GenerateLinkdialog: false,
+    rules: {
+      required: [(value) => !!value || "Required."],
+    },
   }),
   props: ["data", "dialog"],
 
@@ -178,6 +167,9 @@ export default {
       this.$emit("close", false);
     },
     SchedItemConfirm() {
+      if (!this.$refs.form.validate()) {
+        return false;
+      }
       var userid = localStorage.getItem("userid");
       this.scheduleItem.userId = userid;
       console.log("code", this.scheduleItem.socialMedia);

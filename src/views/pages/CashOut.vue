@@ -3,9 +3,14 @@
     :search="search"
     :headers="headers"
     :items="desserts"
-    sort-by="name"
+   
     class="elevation-1"
+      :sort-by="['dtCreated']"
+    :sort-desc="[ true]"
   >
+      <template v-slot:[`item.dtCreated`]="{ item }">
+    <span>{{new Date(item.dtCreated).toLocaleString('en-CA')}}</span>
+  </template>
     <template v-slot:top>
       <v-toolbar flat>
         <v-toolbar-title>Payout</v-toolbar-title>

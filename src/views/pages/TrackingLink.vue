@@ -3,11 +3,13 @@
     :search="search"
     :headers="headers"
     :items="desserts"
-    sort-by="name"
+    
     class="elevation-1"
+  :sort-by="['dtCreated']"
+    :sort-desc="[ true]"
   >
     <template v-slot:[`item.dtCreated`]="{ item }">
-    <span>{{ new Date(item.dtCreated).toLocaleString() }}</span>
+    <span>{{ new Date(item.dtCreated).toLocaleString('en-CA') }}</span>
   </template>
     <template v-slot:top>
       <v-toolbar flat>
@@ -126,9 +128,9 @@ export default {
       { text: "Clicks", value: "CLICKS" },
       { text: "Sign-Up", value: "SIGNUP" },
       { text: "Activated", value: "ACTIVATED" },
-      { text: "Revenue", value: "REVENUE"  , sortable: true, },
-      { text: "Date/Time", value: "dtCreated", },
-     { text: "Actions", value: "actions", sortable: false },
+      { text: "Revenue", value: "REVENUE"  },
+      { text: "Date/Time", value: "dtCreated"},
+     { text: "Actions", value: "actions" },
     ],
     desserts: [],
     editedIndex: -1,
