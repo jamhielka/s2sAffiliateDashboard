@@ -35,7 +35,7 @@
               class="form-control"
               placeholder="Amount"
               v-model="scheduleItem.amount"
-              :rules="rules.required"
+              :rules="rules2"
             ></v-text-field>
           </v-form>
         </v-card-text>
@@ -129,6 +129,11 @@ export default {
     rules: {
       required: [(value) => !!value || "Required."],
     },
+    rules2: [
+         v => !!v || 'Required',
+         v => v >= 100 || 'Cash-out should be above P100',
+         v => v <= 5000 || 'Max should not be above P5,000',
+    ],
   }),
   props: ["data", "dialog"],
 

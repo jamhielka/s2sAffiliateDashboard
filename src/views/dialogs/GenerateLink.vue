@@ -30,10 +30,9 @@
             ></v-text-field> -->
 
                 <v-text-field
-                  ref="name"
+                
                   v-model="scheduleItem.socialMedia"
-                  :rules="[() => !!name || 'This field is required']"
-                  :error-messages="errorMessages"
+                  :rules="[() => !!scheduleItem.socialMedia || 'This field is required']"
                   label="Name"
                   placeholder="Name of Link"
                   required
@@ -89,6 +88,16 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+
+    <v-snackbar v-model="snackbar">
+      {{ text }}
+
+      <template v-slot:action="{ attrs }">
+        <v-btn color="pink" text v-bind="attrs" @click="snackbar = false">
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
   </div>
 </template>
 
@@ -99,6 +108,8 @@
 
 export default {
   data: () => ({
+    snackbar: false,
+    text: "",
     textFieldProps: {
       prependIcon: "mdi-calendar-month-outline",
       rules: [(value) => !!value || "Required."],
@@ -159,34 +170,37 @@ export default {
       this.$emit("close", false);
     },
     SchedItemConfirm() {
+      if (this.scheduleItem.socialMedia == "") {
+        alert("Enter name of link");
+      } else {
+        var userid = localStorage.getItem("userid");
+        this.scheduleItem.userid = userid;
+        console.log("code", this.scheduleItem.socialMedia);
+        this.$api
+          .post("/Affiliate/GenerateLink", this.scheduleItem, {
+            //   headers: {
+            //     Authorization: TToken,
+            //   },
+          })
 
-      if (this.scheduleItem.socialMedia=="") {
-       alert("Enter name of link");
-      } 
-      else{
-var userid = localStorage.getItem("userid");
-      this.scheduleItem.userid = userid;
-      console.log("code", this.scheduleItem.socialMedia);
-      this.$api
-        .post("/Affiliate/GenerateLink", this.scheduleItem, {
-          //   headers: {
-          //     Authorization: TToken,
-          //   },
-        })
+          .then((response) => {
+            console.log(response.data.data[0].TrackingLink);
+            this.generatedlink = response.data.data[0].TrackingLink;
+            if (this.generatedlink == "") {
+              // this.snackbar = true;
+              // this.text = response.data.data[0].Message;
+           alert(response.data.data[0].Message);
+            } else {
+              this.GenerateLinkdialog = true;
+            }
+          })
+          .catch((e) => {
+            //this.table.loading = false;
+            console.log(e);
+          });
 
-        .then((response) => {
-          console.log(response.data.data[0].TrackingLink);
-          this.generatedlink = response.data.data[0].TrackingLink;
-          this.GenerateLinkdialog = true;
-        })
-        .catch((e) => {
-          //this.table.loading = false;
-          console.log(e);
-        });
-
-      this.close();
+        this.close();
       }
-      
     },
 
     closeDelete() {

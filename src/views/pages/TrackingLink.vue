@@ -98,7 +98,9 @@
     <template v-slot:no-data>
       <v-btn color="primary" @click="initialize"> Reset </v-btn>
     </template>
+ 
   </v-data-table>
+  
 </template>
 <script>
 import GenerateLinkDialog from "../dialogs/GenerateLink.vue";
@@ -107,6 +109,7 @@ export default {
     GenerateLinkDialog,
   },
   data: () => ({
+ 
     GenerateLinkDialog: { dialog: false },
     editDialog: { dialog: false },
     search: "",

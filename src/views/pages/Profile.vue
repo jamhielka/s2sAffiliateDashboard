@@ -291,7 +291,7 @@ export default {
         )
         .then((res) => {
           this.listState = res.data.data.provinces;
-          this.editedItem.region = this.selectedRegion.name;
+          this.selectedRegion = this.selectedRegion.name;
         });
     },
 
@@ -310,14 +310,17 @@ export default {
         )
         .then((res) => {
           this.listCities = res.data.data.cities;
-          this.editedItem.province = this.selectedProvince.name;
+          this.selectedProvince = this.selectedProvince.name;
         });
     },
     save() {
       // var TToken = localStorage.getItem("token");
            var userid = localStorage.getItem("userid");
-      this.editedItem.region = this.selectedRegion.name;
-      this.editedItem.province = this.selectedProvince.name;
+
+ this.editedItem.region = this.selectedRegion;
+      this.editedItem.province = this.selectedProvince;
+     
+ 
       this.editedItem.userid=userid;
       this.$api
         .post("/Affiliate/UInfo", this.editedItem, {
