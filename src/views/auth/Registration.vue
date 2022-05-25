@@ -71,6 +71,7 @@
                   label="Birthday"
                   readonly
                   v-on="on"
+                  :rules="rules.required"
                 ></v-text-field>
               </template>
               <v-date-picker
@@ -90,7 +91,7 @@
               label="Password"
               :type="showPassword ? 'text' : 'password'"
               v-model="form.ppassword"
-              :rules="rules.required"
+              :rules="rules.passwordRules"
               @click:append="showPassword = !showPassword"
             ></v-text-field>
 
@@ -188,6 +189,16 @@ export default {
       },
       rules: {
         required: [(value) => !!value || "Required."],
+        passwordRules: [
+          (value) => !!value || "Required",
+          (value) => (value && /\d/.test(value)) || "At least one digit",
+          (value) =>
+            (value && /[A-Z]{1}/.test(value)) || "At least one capital letter",
+          (value) =>
+            (value && /[^A-Za-z0-9]/.test(value)) ||
+            "At least one special character",
+          (value) => (value && value.length >= 6) || "minimum 6 characters",
+        ],
       },
 
       gender: ["Male", "Female"],
