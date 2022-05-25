@@ -115,10 +115,10 @@
         </v-dialog>
       </v-toolbar>
     </template>
-    <template v-slot:[`item.actions`]="{ item }">
+    <!-- <template v-slot:[`item.actions`]="{ item }">
       <v-icon small class="mr-2" @click="editItem(item)"> mdi-pencil </v-icon>
       <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
-    </template>
+    </template> -->
     <template v-slot:no-data>
       <v-btn color="primary" @click="initialize"> Reset </v-btn>
     </template>
@@ -154,7 +154,7 @@ export default {
       { text: "Activated", value: "ACTIVATED" },
       { text: "Revenue", value: "REVENUE" },
       { text: "Date/Time", value: "dtCreated" },
-      { text: "Actions", value: "actions" },
+      // { text: "Actions", value: "actions" },
     ],
     desserts: [],
     editedIndex: -1,
