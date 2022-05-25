@@ -27,7 +27,7 @@
               label="Email Address"
               type="email"
               v-model="form.pemail"
-              :rules="rules.required"
+              :rules="rules.emailRules"
             ></v-text-field>
 
             <v-text-field
@@ -38,7 +38,11 @@
               v-mask="'+63 ### #### ###'"
               masked="false"
               type="tel"
+              autocomplete="null"
               @keyup="catchZero($event)"
+              @copy.prevent
+              @paste.prevent
+              @click.right.prevent
             ></v-text-field>
 
             <v-select
@@ -199,6 +203,13 @@ export default {
             "At least one special character",
           (value) => (value && value.length >= 6) || "minimum 6 characters",
         ],
+        emailRules: [
+          (v) => !!v || "Required",
+          (v) =>
+            /^(([^<>()[\]\\.,;:\s@']+(\.[^<>()\\[\]\\.,;:\s@']+)*)|('.+'))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+              v
+            ) || "E-mail must be valid",
+        ],
       },
 
       gender: ["Male", "Female"],
@@ -321,6 +332,9 @@ export default {
         // console.log("Adasd")
         this.form.pmsisdn = "";
       }
+    },
+    keydown: function(e) {
+      console.log(e);
     },
   },
 
