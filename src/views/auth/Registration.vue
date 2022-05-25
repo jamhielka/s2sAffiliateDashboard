@@ -39,6 +39,7 @@
               masked="false"
               type="tel"
               autocomplete="null"
+              @keydown="catchZero($event)"
               @keyup="catchZero($event)"
               @copy.prevent
               @paste.prevent
@@ -325,8 +326,6 @@ export default {
     },
 
     catchZero(e) {
-      // console.log(e);
-
       if (e.target.value == "+63 0") {
         // return;
         // console.log("Adasd")
