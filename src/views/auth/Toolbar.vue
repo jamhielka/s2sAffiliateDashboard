@@ -4,11 +4,11 @@
       <v-toolbar-title>S2S Affiliate</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items class="hidden-sm-and-down">
-        <template v-for="(menu, i) in menus">
-          <v-btn text exact :to="menu.link" :key="i">
-            <span class="mr-2">{{ menu.title }}</span>
-          </v-btn>
-        </template>
+        <!-- <template > -->
+        <v-btn v-for="(menu, i) in menus" :key="i" text exact :to="menu.link">
+          <span class="mr-2">{{ menu.title }}</span>
+        </v-btn>
+        <!-- </template> -->
         <!-- <v-btn text to="create">
           <span class="mr-2">Create Post</span>
         </v-btn>
@@ -25,11 +25,11 @@
         </template>
 
         <v-list>
-          <template v-for="(menu, i) in menus">
-            <v-list-item :to="menu.link" :key="i">
-              <v-list-item-title>{{ menu.title }}</v-list-item-title>
-            </v-list-item>
-          </template>
+          <!-- <template > -->
+          <v-list-item v-for="(menu, i) in menus" :to="menu.link" :key="i">
+            <v-list-item-title>{{ menu.title }}</v-list-item-title>
+          </v-list-item>
+          <!-- </template> -->
         </v-list>
       </v-menu>
     </v-app-bar>

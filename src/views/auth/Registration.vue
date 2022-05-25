@@ -7,7 +7,6 @@
           src="@/assets/s2s-affiliate-banner.png"
           aspect-ratio="1.9"
         ></v-img>
-
         <v-card-text>
           <v-form ref="form" lazy-validation>
             <v-text-field
@@ -39,6 +38,7 @@
               v-mask="'+63 ### #### ###'"
               masked="false"
               type="tel"
+              @keyup="catchZero($event)"
             ></v-text-field>
 
             <v-select
@@ -49,12 +49,40 @@
             >
             </v-select>
 
-            <v-text-field
+            <!-- <v-text-field
               label="Birthday"
               type="date"
               v-model="form.pdob"
+              min="2014"
               :rules="rules.required"
-            ></v-text-field>
+            ></v-text-field> -->
+
+            <v-menu
+              ref="menu"
+              v-model="menu"
+              :close-on-content-click="false"
+              transition="scale-transition"
+              offset-y
+              min-width="290px"
+            >
+              <template v-slot:activator="{ on }">
+                <v-text-field
+                  v-model="form.pdob"
+                  label="Birthday"
+                  readonly
+                  v-on="on"
+                ></v-text-field>
+              </template>
+              <v-date-picker
+                ref="picker"
+                v-model="form.pdob"
+                :day-format="(date) => new Date(date).getDate()"
+                :picker-date="pickerDate"
+                :max="defaultBday"
+                min="1950"
+                @change="save"
+              ></v-date-picker>
+            </v-menu>
 
             <v-text-field
               id="password"
@@ -139,6 +167,10 @@ import moment from "moment";
 export default {
   data() {
     return {
+      date: null,
+      menu: false,
+      pickerDate: "",
+
       loading: false,
       showPassword: false,
       form: {
@@ -264,10 +296,44 @@ export default {
     trimMobileNumber(num) {
       return num.replace(/\s+/g, "").replace("+", "");
     },
+
+    save(date) {
+      this.$refs.menu.save(date);
+      this.pickerDate = date;
+    },
+
+    catchZero(e) {
+      // console.log(e);
+
+      if (e.target.value == "+63 0") {
+        // return;
+        // console.log("Adasd")
+        this.form.pmsisdn = "";
+      }
+    },
   },
 
   created() {
     this.getLocation();
+  },
+
+  computed: {
+    defaultBday() {
+      const bday = moment()
+        .subtract(18, "years")
+        .format("YYYY-MM-DD");
+      return bday;
+    },
+  },
+  watch: {
+    menu(val) {
+      val &&
+        setTimeout(
+          () => (
+            (this.$refs.picker.activePicker = "YEAR"), (this.pickerDate = null)
+          )
+        );
+    },
   },
 };
 </script>
