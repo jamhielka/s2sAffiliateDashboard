@@ -215,10 +215,11 @@ export default {
           this.editedItem = response.data.data[0];
           this.selectedRegion = this.editedItem.region;
           this.selectedProvince = this.editedItem.province;
+       
           this.editedItem.dob = moment(this.editedItem.dob).format(
             "YYYY-MM-DD"
           );
-          this.editedItem.city = response.data.data[0].city;
+          //this.editedItem.city = response.data.data.city;
           this.editedItem.userid = userid;
           let prov = this.selectedProvince;
           var valObj = this.listState.filter(function (elem) {
