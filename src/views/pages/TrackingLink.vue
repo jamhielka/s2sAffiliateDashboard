@@ -3,14 +3,38 @@
     :search="search"
     :headers="headers"
     :items="desserts"
-    
     class="elevation-1"
-  :sort-by="['dtCreated']"
-    :sort-desc="[ true]"
+    :sort-by="['dtCreated']"
+    :sort-desc="[true]"
   >
     <template v-slot:[`item.dtCreated`]="{ item }">
-    <span>{{ new Date(item.dtCreated).toLocaleString('en-CA') }}</span>
-  </template>
+      <span>{{ new Date(item.dtCreated).toLocaleString("en-CA") }}</span>
+    </template>
+    <template v-slot:[`item.LINK`]="{ item }">
+      <input
+        type="label"
+        
+      
+        readonly
+        :value="item.LINK"
+        style="width: 250px"
+      />
+   
+    <v-tooltip bottom>
+      <template v-slot:activator="{ on, attrs }">
+    
+
+            <v-btn    v-bind="attrs"
+          v-on="on" icon color="red" @click="copy(item)" target="Copy">
+        <v-icon>mdi-content-copy</v-icon>
+      </v-btn>
+      </template>
+      <span>Copy</span>
+    </v-tooltip>
+  
+   
+    </template>
+ 
     <template v-slot:top>
       <v-toolbar flat>
         <v-toolbar-title>Affiliate Link</v-toolbar-title>
@@ -98,9 +122,7 @@
     <template v-slot:no-data>
       <v-btn color="primary" @click="initialize"> Reset </v-btn>
     </template>
- 
   </v-data-table>
-  
 </template>
 <script>
 import GenerateLinkDialog from "../dialogs/GenerateLink.vue";
@@ -109,7 +131,6 @@ export default {
     GenerateLinkDialog,
   },
   data: () => ({
- 
     GenerateLinkDialog: { dialog: false },
     editDialog: { dialog: false },
     search: "",
@@ -119,21 +140,21 @@ export default {
       {
         text: "Social Media",
         align: "start",
-      
+
         value: "SocialMedia",
       },
       {
         text: "Affiliate Link",
         align: "start",
-     
+
         value: "LINK",
       },
       { text: "Clicks", value: "CLICKS" },
       { text: "Sign-Up", value: "SIGNUP" },
       { text: "Activated", value: "ACTIVATED" },
-      { text: "Revenue", value: "REVENUE"  },
-      { text: "Date/Time", value: "dtCreated"},
-     { text: "Actions", value: "actions" },
+      { text: "Revenue", value: "REVENUE" },
+      { text: "Date/Time", value: "dtCreated" },
+      { text: "Actions", value: "actions" },
     ],
     desserts: [],
     editedIndex: -1,
@@ -148,9 +169,9 @@ export default {
     GetRequest: {
       userid: "",
     },
-    approveData:[]
+    approveData: [],
   }),
- 
+
   computed: {
     formTitle() {
       return this.editedIndex === -1 ? "New Item" : "Edit Item";
@@ -303,6 +324,10 @@ export default {
     },
     GeneratedLinkBTN() {
       this.editDialog.dialog = true;
+    },
+    copy(item) {
+      console.log()
+    navigator.clipboard.writeText(item.LINK);
     },
   },
 };

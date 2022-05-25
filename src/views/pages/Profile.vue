@@ -82,7 +82,7 @@
             <div class="mt-4">
               <v-select
                 v-model="editedItem.gender"
-                :items="['male', 'female']"
+                :items="['Male', 'Female']"
                 label="Enter your Gender"
                 required
               ></v-select>
