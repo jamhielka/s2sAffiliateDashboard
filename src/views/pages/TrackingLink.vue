@@ -326,8 +326,15 @@ export default {
       this.editDialog.dialog = true;
     },
     copy(item) {
-      console.log()
-    navigator.clipboard.writeText(item.LINK);
+    //   console.log()
+    // navigator.clipboard.writeText();
+var text = item.LINK;
+navigator.clipboard.writeText(text).then(function() {
+  console.log('Async: Copying to clipboard was successful!');
+}, function(err) {
+  console.error('Async: Could not copy text: ', err);
+});
+
     },
   },
 };

@@ -114,7 +114,7 @@
             </div>
             <div class="mt-4">
               <v-select
-                v-model="editedItem.city"
+                v-model="selectedCity"
                 :items="listCities"
                 item-text="name"
                 item-value="name"
@@ -183,6 +183,7 @@ export default {
     listCities: [],
     selectedRegion: null,
     selectedProvince: null,
+    selectedCity: null,
   }),
   components: {},
   created() {
@@ -215,11 +216,12 @@ export default {
           this.editedItem = response.data.data[0];
           this.selectedRegion = this.editedItem.region;
           this.selectedProvince = this.editedItem.province;
-       
+       this.selectedCity=this.editedItem.city;
           this.editedItem.dob = moment(this.editedItem.dob).format(
             "YYYY-MM-DD"
           );
-          //this.editedItem.city = response.data.data.city;
+        
+
           this.editedItem.userid = userid;
           let prov = this.selectedProvince;
           var valObj = this.listState.filter(function (elem) {
@@ -320,7 +322,7 @@ export default {
 
  this.editedItem.region = this.selectedRegion;
       this.editedItem.province = this.selectedProvince;
-     
+     this.editedItem.city=this.selectedCity;
  
       this.editedItem.userid=userid;
       this.$api
