@@ -32,10 +32,10 @@
 
             <v-text-field
               label="Mobile Number"
-              placeholder="+63 915 XXXX XXX"
+              placeholder="+63915XXXXXXX"
               v-model="form.pmsisdn"
-              :rules="rules.required"
-              v-mask="'+63 ### #### ###'"
+              :rules="rules.mobileNumberRules"
+              v-mask="'+639#########'"
               masked="false"
               type="tel"
               autocomplete="null"
@@ -210,6 +210,10 @@ export default {
             /^(([^<>()[\]\\.,;:\s@']+(\.[^<>()\\[\]\\.,;:\s@']+)*)|('.+'))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
               v
             ) || "E-mail must be valid",
+        ],
+        mobileNumberRules: [
+          (value) => !!value || "Required",
+          (value) => (value && value.length >= 13) || "Invalid mobile number",
         ],
       },
 
