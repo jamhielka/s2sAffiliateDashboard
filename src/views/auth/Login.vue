@@ -102,8 +102,17 @@ export default {
           //} else if (this.$store.getters.userRole === "VALIDATOR") {
           //  this.$router.push("/validator");
           //} else {
-            this.$router.push("/admin");
+        
           //}
+          console.log(this.$store.getters.userRole);
+if (this.$store.getters.userRole === "USER") {
+     this.$router.push("/admin");
+  
+} else {
+   this.$router.push("/S2Sadmin");
+   
+}
+
           this.loading = false;
         })
         .catch((err) => {

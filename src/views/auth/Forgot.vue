@@ -80,9 +80,9 @@ export default {
             alert("OTP has been sent to your registered mobile number");
             this.$router.push("/ChangePassword");
           } else {
-            //alert(message);
-             alert("OTP has been sent to your registered mobile number");
-            this.$router.push("/ChangePassword");
+          alert(message);
+             //alert("OTP has been sent to your registered mobile number");
+           // this.$router.push("/ChangePassword");
           }
         })
         .catch((e) => {

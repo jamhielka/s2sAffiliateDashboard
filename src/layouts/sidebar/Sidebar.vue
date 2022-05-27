@@ -12,7 +12,10 @@
     id="main-sidebar"
   >
     <v-list dense nav>
-      <!---USer Area -->
+    
+
+       <div v-if="userRole == 'USER'">
+  <!---USer Area -->
       <v-list-item two-line class="px-0">
         <!-- <v-list-item-avatar>
           <img src="https://randomuser.me/api/portraits/men/81.jpg" />
@@ -48,10 +51,14 @@
              
         </v-list-item-content>
       </v-list-item>
+       </div>
+         <div v-if="userRole == 'ADMIN'">
+           WALLET BALANCE
+         </div>
            <!--REVENUE-->
            <hr/>
       <!---Sidebar Items -->
-      <v-list-item
+      <!-- <v-list-item
         v-for="item in items"
         :key="item.title"
         :to="item.to"
@@ -65,8 +72,49 @@
         <v-list-item-content>
           <v-list-item-title>{{ item.title }}</v-list-item-title>
         </v-list-item-content>
-      </v-list-item>
+      </v-list-item> -->
       <!---Sidebar Items -->
+<!--USER ROLE-->
+  <template v-for="(item, i) in items">
+        <div v-if="(userRole == 'USER' || userRole == 'ADMIN')" :key="i">
+          <v-list-item
+            :key="i"
+            :to="`${$route.matched[0].path}/${item.to}`"
+            :active-class="`success white--text`"
+            exact
+            link
+            v-if="
+              item.role.indexOf(userRole) !== -1 "
+          >
+            <v-list-item-icon>
+              <v-icon>{{ item.icon }} </v-icon>
+            </v-list-item-icon>
+
+            <v-list-item-content>
+              <v-list-item-title>{{ item.title }}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </div>
+        <div v-else :key="i">
+          <v-list-item
+            :key="i"
+            :to="`${$route.matched[0].path}/${item.to}`"
+            :active-class="`success white--text`"
+            exact
+            link
+            v-if="item.role.indexOf(userRole) !== -1"
+          >
+            <v-list-item-icon>
+              <v-icon>{{ item.icon }}</v-icon>
+            </v-list-item-icon>
+
+            <v-list-item-content>
+              <v-list-item-title>{{ item.title }}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </div>
+      </template>
+
     </v-list>
          <CashOutDialog
          
@@ -99,23 +147,52 @@ export default {
       {
         title: "Home",
         icon: "mdi-view-dashboard",
-        to: "/admin",
+        to: "",
+        role:["USER"]
       },
 
       {
         title: "Affiliate Link",
         icon: "mdi-table-column-width",
-        to: "/trackinglink",
+        to: "trackinglink",
+        role:["USER"]
       },
       {
         title: "Cash-out Transaction",
         icon: "mdi-account-cash",
-        to: "/cashout",
+        to: "cashout",
+        role:["USER"]
       },
       {
         title: "Profile",
         icon: "mdi-account-box",
-        to: "/profile",
+        to: "profile",
+        role:["USER"]
+      },
+       {
+        title: "Home",
+        icon: "mdi-view-dashboard",
+        to: "",
+        role:["ADMIN"]
+      },
+      {
+        title: "Affiliate",
+        icon: "mdi-account-box",
+        to: "Affiliate",
+        role:["ADMIN"]
+      },
+       {
+        title: "Cash-Out Request",
+        icon: "mdi-account-cash",
+        to: "CORequest",
+        role:["ADMIN"]
+      },
+      
+       {
+        title: "Completed Cash Out",
+        icon: "mdi-account-cash",
+        to: "COCompleted",
+        role:["ADMIN"]
       },
     ],
     ReportReqItem: {
@@ -139,6 +216,9 @@ export default {
     UsernameDisplay() {
       return this.$store.getters.getUsername;
       // format/do something with date
+    },
+    userRole() {
+      return this.$store.getters.userRole;
     },
   },
   watch: {

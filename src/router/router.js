@@ -40,7 +40,36 @@ let router = new Router({
         },
       ],
     },
+    {
+      name: "S2SAdminRoutes",
+      path: "/S2Sadmin",
+      redirect: "/",
+      component: () => import("@/layouts/Layout"),
+      children: [
+        // Components
 
+        {
+          name: "AdminDashboard",
+          path: "/",
+          component: () => import("@/views/pages/Admin"),
+        },
+        {
+          name: "Affiliate",
+          path: "Affiliate",
+          component: () => import("@/views/pages/Affiliate"),
+        },
+        {
+          name: "CORequest",
+          path: "CORequest",
+          component: () => import("@/views/pages/CORequest"),
+        },
+        {
+          name: "COCompleted",
+          path: "COCompleted",
+          component: () => import("@/views/pages/COCompleted"),
+        },
+      ]
+      },
     {
       name: "AdminRoutes",
       path: "/admin",
@@ -57,135 +86,135 @@ let router = new Router({
 
         {
           name: "Tracking Link",
-          path: "/trackinglink",
+          path: "trackinglink",
           component: () => import("@/views/pages/TrackingLink"),
         },
         {
           name: "Cash Out",
-          path: "/cashout",
+          path: "cashout",
           component: () => import("@/views/pages/CashOut"),
         },
         {
           name: "Profile",
-          path: "/profile",
+          path: "profile",
           component: () => import("@/views/pages/Profile"),
         },
 
-        {
-          name: "Icons",
-          path: "/icons",
-          component: () => import("@/views/pages/Icons"),
-        },
+        // {
+        //   name: "Icons",
+        //   path: "/icons",
+        //   component: () => import("@/views/pages/Icons"),
+        // },
 
-        {
-          name: "Events",
-          path: "/events",
-          component: () => import("@/views/pages/Games"),
-        },
+        // {
+        //   name: "Events",
+        //   path: "/events",
+        //   component: () => import("@/views/pages/Games"),
+        // },
 
-        {
-          name: "TableSimple",
-          path: "/tables-simple",
-          component: () => import("@/views/pages/TableSimple"),
-        },
-        {
-          name: "Add Employee",
-          path: "/addEmployee",
-          component: () => import("@/views/pages/addEmployee"),
-        },
-        {
-          name: "Department",
-          path: "/department",
-          component: () => import("@/views/pages/department"),
-        },
+        // {
+        //   name: "TableSimple",
+        //   path: "/tables-simple",
+        //   component: () => import("@/views/pages/TableSimple"),
+        // },
+        // {
+        //   name: "Add Employee",
+        //   path: "/addEmployee",
+        //   component: () => import("@/views/pages/addEmployee"),
+        // },
+        // {
+        //   name: "Department",
+        //   path: "/department",
+        //   component: () => import("@/views/pages/department"),
+        // },
 
-        {
-          name: "Designations",
-          path: "/designations",
-          component: () => import("@/views/pages/designations"),
-        },
-        {
-          name: "Job Status",
-          path: "/jobStatus",
-          component: () => import("@/views/pages/jobStatus"),
-        },
-        {
-          name: "Shifts",
-          path: "/shifts",
-          component: () => import("@/views/pages/Shifts"),
-        },
-        {
-          name: "Holiday",
-          path: "/holiday",
-          component: () => import("@/views/pages/Holiday"),
-        },
-        {
-          name: "Employee",
-          path: "/employee",
-          component: () => import("@/views/pages/employee"),
-        },
-        {
-          name: "Schedule",
-          path: "/schedule",
-          component: () => import("@/views/pages/schedule"),
-        },
-        {
-          name: "Scheduling",
-          path: "/scheduling",
-          component: () => import("@/views/pages/scheduling"),
-        },
+        // {
+        //   name: "Designations",
+        //   path: "/designations",
+        //   component: () => import("@/views/pages/designations"),
+        // },
+        // {
+        //   name: "Job Status",
+        //   path: "/jobStatus",
+        //   component: () => import("@/views/pages/jobStatus"),
+        // },
+        // {
+        //   name: "Shifts",
+        //   path: "/shifts",
+        //   component: () => import("@/views/pages/Shifts"),
+        // },
+        // {
+        //   name: "Holiday",
+        //   path: "/holiday",
+        //   component: () => import("@/views/pages/Holiday"),
+        // },
+        // {
+        //   name: "Employee",
+        //   path: "/employee",
+        //   component: () => import("@/views/pages/employee"),
+        // },
+        // {
+        //   name: "Schedule",
+        //   path: "/schedule",
+        //   component: () => import("@/views/pages/schedule"),
+        // },
+        // {
+        //   name: "Scheduling",
+        //   path: "/scheduling",
+        //   component: () => import("@/views/pages/scheduling"),
+        // },
 
-        {
-          name: "TableSimple",
-          path: "/tables-simple",
-          component: () => import("@/views/pages/TableSimple"),
-        },
-        {
-          name: "Add Employee",
-          path: "/addEmployee",
-          component: () => import("@/views/pages/addEmployee"),
-        },
-        {
-          name: "Department",
-          path: "/department",
-          component: () => import("@/views/pages/department"),
-        },
+        // {
+        //   name: "TableSimple",
+        //   path: "/tables-simple",
+        //   component: () => import("@/views/pages/TableSimple"),
+        // },
+        // {
+        //   name: "Add Employee",
+        //   path: "/addEmployee",
+        //   component: () => import("@/views/pages/addEmployee"),
+        // },
+        // {
+        //   name: "Department",
+        //   path: "/department",
+        //   component: () => import("@/views/pages/department"),
+        // },
 
-        {
-          name: "Designations",
-          path: "/designations",
-          component: () => import("@/views/pages/designations"),
-        },
-        {
-          name: "Job Status",
-          path: "/jobStatus",
-          component: () => import("@/views/pages/jobStatus"),
-        },
-        {
-          name: "Shifts",
-          path: "/shifts",
-          component: () => import("@/views/pages/Shifts"),
-        },
-        {
-          name: "Holiday",
-          path: "/holiday",
-          component: () => import("@/views/pages/Holiday"),
-        },
-        {
-          name: "Employee",
-          path: "/employee",
-          component: () => import("@/views/pages/employee"),
-        },
-        {
-          name: "Schedule",
-          path: "/schedule",
-          component: () => import("@/views/pages/schedule"),
-        },
-        {
-          name: "Scheduling",
-          path: "/scheduling",
-          component: () => import("@/views/pages/scheduling"),
-        },
+        // {
+        //   name: "Designations",
+        //   path: "/designations",
+        //   component: () => import("@/views/pages/designations"),
+        // },
+        // {
+        //   name: "Job Status",
+        //   path: "/jobStatus",
+        //   component: () => import("@/views/pages/jobStatus"),
+        // },
+        // {
+        //   name: "Shifts",
+        //   path: "/shifts",
+        //   component: () => import("@/views/pages/Shifts"),
+        // },
+        // {
+        //   name: "Holiday",
+        //   path: "/holiday",
+        //   component: () => import("@/views/pages/Holiday"),
+        // },
+        // {
+        //   name: "Employee",
+        //   path: "/employee",
+        //   component: () => import("@/views/pages/employee"),
+        // },
+        // {
+        //   name: "Schedule",
+        //   path: "/schedule",
+        //   component: () => import("@/views/pages/schedule"),
+        // },
+        // {
+        //   name: "Scheduling",
+        //   path: "/scheduling",
+        //   component: () => import("@/views/pages/scheduling"),
+        // },
       ],
     },
   ],

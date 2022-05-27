@@ -223,11 +223,28 @@ export default {
         
 
           this.editedItem.userid = userid;
+         let region =this.selectedRegion;
           let prov = this.selectedProvince;
+          var valobjReg= this.listCountry.filter(function (elem) {
+            if (elem.name == region) return elem._id;
+          });
           var valObj = this.listState.filter(function (elem) {
             if (elem.name == prov) return elem._id;
           });
-
+axios
+        .get(
+          `http://52.220.32.14:10210/api/provinces?regionId=${valobjReg[0]._id}`,
+          {
+            //headers: {
+            // Authorization: `Bearer ${this.authToken}`,
+            // Accept: "application/json",
+            //},
+          }
+        )
+        .then((res) => {
+          this.listState = res.data.data.provinces;
+         // this.selectedRegion = this.selectedRegion.name;
+        });
           axios
             .get(
               `http://52.220.32.14:10210/api/cities?provinceId=${valObj[0]._id}`,
@@ -266,6 +283,7 @@ export default {
         });
     },
     loadProvinces() {
+ 
       axios
         .get("http://52.220.32.14:10210/api/provinces", {
           //headers: {
