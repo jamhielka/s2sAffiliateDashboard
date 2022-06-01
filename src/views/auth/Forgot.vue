@@ -73,8 +73,11 @@ export default {
         .then((response) => {
           console.log(response);
           var message = response.data.data.Message;
+
                localStorage.setItem('MOB', response.data.data.msisdn);
-          if (message == "VALID") {
+         var status = response.data.status;
+     
+          if (status == "OK") {
               
          
             alert("OTP has been sent to your registered mobile number");

@@ -15,12 +15,12 @@
                 >
                   {{ text }}
                 </v-snackbar>
-              <v-form ref="form" lazy-validation>
+              <v-form ref="form" v-model="valid" lazy-validation>
               <v-text-field
                   v-model="editedItem.otp"
                     :rules="rules.required"
                   label="OTP"
-                  required
+               
                     prepend-icon="mdi-lock"
                    @finish="onFinish"
                 ></v-text-field>
@@ -32,7 +32,7 @@
                   label="Password"
                   :type="showPassword ? 'text' : 'password'"
                   v-model="editedItem.password"
-                  :rules="rules.required"
+                  :rules="rules.passwordRules"
                   @click:append="showPassword = !showPassword"
                 ></v-text-field>
                 <v-text-field
@@ -42,7 +42,7 @@
                   label="Confirm Password"
                   :type="CshowPassword ? 'text' : 'password'"
                   v-model="editedItem.confirmpassword"
-                  :rules="rules.required"
+                  :rules="rules.passwordRules"
                   @click:append="CshowPassword = !CshowPassword"
                 ></v-text-field>
               </v-form>
@@ -80,6 +80,7 @@
 
 export default {
   data: () => ({
+    valid: true,
     loading: false,
     showPassword: false,
     CshowPassword: false,
@@ -93,24 +94,51 @@ export default {
     expectedOtp: "133707",
     rules: {
       required: [(value) => !!value || "Required."],
+       passwordRules: [
+          (value) => !!value || "Required",
+          (value) => (value && /\d/.test(value)) || "At least one digit",
+          (value) =>
+            (value && /[A-Z]{1}/.test(value)) || "At least one capital letter",
+          (value) =>
+            (value && /[^A-Za-z0-9]/.test(value)) ||
+            "At least one special character",
+          (value) => (value && value.length >= 6) || "minimum 6 characters",
+        ],
+        emailRules: [
+          (v) => !!v || "Required",
+          (v) =>
+            /^(([^<>()[\]\\.,;:\s@']+(\.[^<>()\\[\]\\.,;:\s@']+)*)|('.+'))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+              v
+            ) || "E-mail must be valid",
+        ],
+        mobileNumberRules: [
+          (value) => !!value || "Required",
+          (value) => (value && value.length >= 13) || "Invalid mobile number",
+        ],
     },
       editedItem: {
       otp: "",
        password: "",
     confirmpassword: "",
     msisdn:""
-    }
+    },
+    
   }),
 
   methods: {
     validate() {
       this.$refs.form.validate();
-  this.$router.push("/Login");
+ // this.$router.push("/Login");
     },
     ChangePassword() {
-      this.$refs.form.validate();
-      this.editedItem.msisdn= localStorage.getItem('MOB');
-      console.log(this.editedItem.msisdn);
+      var isvalid=this.$refs.form.validate();
+      console.log(isvalid);
+     
+      if (isvalid==true) {
+
+         if (this.editedItem.password==this.editedItem.confirmpassword) {
+        this.editedItem.msisdn= localStorage.getItem('MOB');
+     
       this.$api
         .post("/Affiliate/ChangePassword", this.editedItem, {
           // headers: {
@@ -118,22 +146,36 @@ export default {
           // },
         })
         .then((response) => {
-          console.log(response);
-          var message = response.data.data.message;
+          console.log(response.data.data.status);
+          var message = response.data.data.Message;
+          //var status = response.data.data.status;
+     
           if (message == "Saved Successfully") {
             alert("Password is now updated");
             this.$router.push("/Login");
                localStorage.removeItem('MOB')
           } else {
-               alert("Password is now updated");
-              this.$router.push("/Login");
+               alert(message);
+              ///this.$router.push("/Login");
           }
         })
         .catch((e) => {
           console.log(e);
            alert("something wrong...");
-            this.$router.push("/Login");
+            //this.$router.push("/Login");
         });
+      }
+      else
+      {
+        alert("Password did not match!")
+      }
+
+      
+    }
+    
+
+
+      
     },
     resetValidation() {
       this.$refs.form.resetValidation();
