@@ -5,7 +5,7 @@
         <img src="../../assets/surf2sawa_icon.png" />
       </span>
       <span class="logo-text ml-2">
-     S2S Affiliate
+        S2S Affiliate
       </span>
     </v-toolbar-title>
     <v-app-bar-nav-icon
@@ -63,7 +63,7 @@
 </template>
 <script>
 // Utilities
-import { mapState, mapMutations } from "vuex";
+// import { mapMutations } from "vuex";
 export default {
   name: "Header",
 
@@ -78,8 +78,8 @@ export default {
   data: () => ({
     userprofile: [
       { title: "My Profile" },
-     // { title: "My Balance" },
-     // { title: "Inbox" },
+      // { title: "My Balance" },
+      // { title: "Inbox" },
       //{ title: "Account Setting" },
       { title: "Logout" },
     ],
@@ -89,20 +89,27 @@ export default {
   }),
 
   computed: {
-    ...mapState({
-      Sidebar_drawer: (state) => state.SidebarModule.Sidebar_drawer,
-    }),
+    // ...mapState({
+    //   Sidebar_drawer: (state) => state.SidebarModule.Sidebar_drawer,
+    // }),
 
-     isLoggedIn: function() {
+    Sidebar_drawer() {
+      return this.$store.getters.getSidebar.Sidebar_drawer;
+    },
+
+    isLoggedIn: function() {
       return this.$store.getters.isLoggedIn;
     },
   },
 
   methods: {
-    ...mapMutations({
-      setSidebarDrawer: "SET_SIDEBAR_DRAWER",
-    }),
-     logout: function() {
+    // ...mapMutations({
+    //   setSidebarDrawer: "SET_SIDEBAR_DRAWER",
+    // }),
+    setSidebarDrawer(e) {
+      this.$store.dispatch("ADD_SIDEBAR_DRAWER", e);
+    },
+    logout: function() {
       this.$store.dispatch("logout").then(() => {
         this.$router.push("/login");
       });
