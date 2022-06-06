@@ -87,7 +87,7 @@
               <v-select
                 v-model="editedItem.gender"
                 :items="['Male', 'Female']"
-                label="Enter your Gender"
+                label="Gender"
                 required
               ></v-select>
             </div>
