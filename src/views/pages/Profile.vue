@@ -58,7 +58,7 @@
             <v-text-field
               type="email"
               v-model="editedItem.email"
-              label="Email e.g. 'example@gmail.com"
+              label="Email"
               filled
               background-color="transparent"
             ></v-text-field>
@@ -97,7 +97,7 @@
                 :items="listCountry"
                 item-text="name"
                 item-value="name"
-                label="Enter your Region"
+                label="Region"
                 @change="onChangeCountry()"
                 required
                 return-object
@@ -110,7 +110,7 @@
                 :items="listState"
                 item-text="name"
                 item-value="name"
-                label="Enter your Province"
+                label="Province"
                 @change="onChangeState"
                 return-object
                 required
@@ -122,7 +122,7 @@
                 :items="listCities"
                 item-text="name"
                 item-value="name"
-                label="Enter your City"
+                label="City"
                 required
               ></v-select>
             </div>
@@ -337,6 +337,7 @@ axios
         .then((res) => {
           this.listCities = res.data.data.cities;
           this.selectedProvince = this.selectedProvince.name;
+          this.selectedCity=this.editedItem.city;
         });
     },
     save() {
