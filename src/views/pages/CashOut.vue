@@ -132,6 +132,7 @@ export default {
       { text: "is Approved", value: "isApproved" },
        { text: "Approved By", value: "ApprovedBy" },
         { text: "Date Approved", value: "dtApproved" },
+              { text: "Reference No", value: "ReferenceNo" },
       //{ text: "Actions", value: "actions", sortable: false },
     ],
     desserts: [],

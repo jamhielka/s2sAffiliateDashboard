@@ -29,18 +29,21 @@
             <v-text-field
               type="text"
               class="form-control"
+              label="Lastname"
               placeholder="Enter your Last Name"
               v-model="editedItem.lastname"
             ></v-text-field>
             <v-text-field
               type="text"
               class="form-control"
+               label="Firstname"
               placeholder="Enter your First Name"
               v-model="editedItem.firstname"
             ></v-text-field>
             <v-text-field
               type="text"
               class="form-control"
+              label="Mobile Number"
               placeholder="Enter your Mobile Number"
               v-model="editedItem.msisdn"
             ></v-text-field>
@@ -49,6 +52,7 @@
               type="date"
               class="form-control"
               placeholder="Enter your Date of Birth"
+              label="Date of Birth"
               v-model="editedItem.dob"
             ></v-text-field>
             <v-text-field
@@ -93,11 +97,11 @@
                 :items="listCountry"
                 item-text="name"
                 item-value="name"
-                label="Enter your region"
+                label="Enter your Region"
                 @change="onChangeCountry()"
                 required
                 return-object
-                single-line
+             
               ></v-select>
             </div>
             <div class="mt-4">
@@ -126,6 +130,7 @@
               type="text"
               class="form-control"
               placeholder="Enter your Address"
+              label="Address"
               v-model="editedItem.address"
             ></v-textarea>
             <v-btn

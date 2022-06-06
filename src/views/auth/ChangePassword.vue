@@ -20,7 +20,7 @@
                   v-model="editedItem.otp"
                     :rules="rules.required"
                   label="OTP"
-               
+               type="number"
                     prepend-icon="mdi-lock"
                    @finish="onFinish"
                 ></v-text-field>
