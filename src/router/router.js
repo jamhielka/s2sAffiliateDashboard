@@ -12,7 +12,7 @@ let router = new Router({
       name: "PublicRoutes",
       path: "/",
       redirect: "/login",
-      component: () => import("@/views/auth/Toolbar"),
+      component: () => import("@/views/auth/Layout"),
       children: [
         {
           name: "Login",
