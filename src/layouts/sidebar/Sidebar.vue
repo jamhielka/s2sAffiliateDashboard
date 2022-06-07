@@ -35,7 +35,7 @@
           </v-list-item-icon>
 
           <v-list-item-content>
-            <v-list-item-title>Revenue</v-list-item-title>
+            <v-list-item-title>Current Incentive</v-list-item-title>
             <v-list-item-content>{{
               formatPrice(commission)
             }}</v-list-item-content>

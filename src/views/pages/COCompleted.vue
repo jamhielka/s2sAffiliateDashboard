@@ -156,6 +156,7 @@ export default {
       { text: "Amount", value: "amount" },
        { text: "Date Approved", value: "dtApproved" },
         { text: "Approved By", value: "ApprovedBy" },
+         { text: "Reference No", value: "ReferenceNo" },
       //{ text: "Current Incentive", value: "Revenue" },
    
       // { text: "Actions", value: "actions" },

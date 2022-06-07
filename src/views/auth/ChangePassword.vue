@@ -1,8 +1,4 @@
 <template>
-  <!-- <v-main>
-    <v-container fluid fill-height>
-      <v-layout align-center justify-center>
-        <v-flex xs12 sm8 md4> -->
   <v-card class="elevation-12 rounded-card">
     <v-card-title>Change Password</v-card-title>
     <v-divider></v-divider>
@@ -67,10 +63,6 @@
       </v-btn>
     </v-card-actions>
   </v-card>
-  <!-- </v-flex>
-      </v-layout>
-    </v-container>
-  </v-main> -->
 </template>
 <style scoped>
 .position-relative {

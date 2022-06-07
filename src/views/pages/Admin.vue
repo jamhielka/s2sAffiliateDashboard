@@ -113,7 +113,7 @@
           <v-row class="text-center">
           
             <v-col cols="12">
-                <h3>TOP 10 AFFILATE-THIS MONTH</h3>
+                <h3>TOP 10 AFFILATE-MONTHLY</h3>
 
   <v-data-table
     dense

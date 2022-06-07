@@ -29,18 +29,21 @@
             <v-text-field
               type="text"
               class="form-control"
+              label="Lastname"
               placeholder="Enter your Last Name"
               v-model="editedItem.lastname"
             ></v-text-field>
             <v-text-field
               type="text"
               class="form-control"
+               label="Firstname"
               placeholder="Enter your First Name"
               v-model="editedItem.firstname"
             ></v-text-field>
             <v-text-field
               type="text"
               class="form-control"
+              label="Mobile Number"
               placeholder="Enter your Mobile Number"
               v-model="editedItem.msisdn"
             ></v-text-field>
@@ -49,12 +52,13 @@
               type="date"
               class="form-control"
               placeholder="Enter your Date of Birth"
+              label="Date of Birth"
               v-model="editedItem.dob"
             ></v-text-field>
             <v-text-field
               type="email"
               v-model="editedItem.email"
-              label="Email e.g. 'example@gmail.com"
+              label="Email"
               filled
               background-color="transparent"
             ></v-text-field>
@@ -83,7 +87,7 @@
               <v-select
                 v-model="editedItem.gender"
                 :items="['Male', 'Female']"
-                label="Enter your Gender"
+                label="Gender"
                 required
               ></v-select>
             </div>
@@ -93,11 +97,11 @@
                 :items="listCountry"
                 item-text="name"
                 item-value="name"
-                label="Enter your region"
+                label="Region"
                 @change="onChangeCountry()"
                 required
                 return-object
-                single-line
+             
               ></v-select>
             </div>
             <div class="mt-4">
@@ -106,7 +110,7 @@
                 :items="listState"
                 item-text="name"
                 item-value="name"
-                label="Enter your Province"
+                label="Province"
                 @change="onChangeState"
                 return-object
                 required
@@ -118,7 +122,7 @@
                 :items="listCities"
                 item-text="name"
                 item-value="name"
-                label="Enter your City"
+                label="City"
                 required
               ></v-select>
             </div>
@@ -126,6 +130,7 @@
               type="text"
               class="form-control"
               placeholder="Enter your Address"
+              label="Address"
               v-model="editedItem.address"
             ></v-textarea>
             <v-btn
@@ -332,6 +337,7 @@ axios
         .then((res) => {
           this.listCities = res.data.data.cities;
           this.selectedProvince = this.selectedProvince.name;
+          this.selectedCity=this.editedItem.city;
         });
     },
     save() {
