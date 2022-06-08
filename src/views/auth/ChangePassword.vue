@@ -88,13 +88,13 @@ export default {
       required: [(value) => !!value || "Required."],
       passwordRules: [
         (value) => !!value || "Required",
-        (value) => (value && value.length >= 6) || "minimum 6 characters",
+        (value) => (value && value.length >= 6) || "Minimum 6 characters",
         (value) =>
           (value && /[A-Z]{1}/.test(value)) || "At least one capital letter",
         (value) =>
           (value && /[^A-Za-z0-9]/.test(value)) ||
           "At least one special character",
-        //(value) => (value && /\d/.test(value)) || "At least one digit",
+        (value) => (value && /\d/.test(value)) || "At least one number",
       ],
       emailRules: [
         (v) => !!v || "Required",
