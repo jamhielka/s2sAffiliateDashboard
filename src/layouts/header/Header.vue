@@ -109,8 +109,10 @@ export default {
     setSidebarDrawer(e) {
       this.$store.dispatch("ADD_SIDEBAR_DRAWER", e);
     },
+    
     logout: function() {
       this.$store.dispatch("logout").then(() => {
+        this.$store.dispatch("ADD_USER", {});
         this.$router.push("/login");
       });
     },

@@ -40,6 +40,7 @@ let router = new Router({
         },
       ],
     },
+
     {
       name: "S2SAdminRoutes",
       path: "/S2Sadmin",
@@ -52,52 +53,58 @@ let router = new Router({
           name: "AdminDashboard",
           path: "/",
           component: () => import("@/views/pages/Admin"),
+          meta: { authorize: ["ADMIN"] },
         },
         {
           name: "Affiliate",
           path: "Affiliate",
           component: () => import("@/views/pages/Affiliate"),
+          meta: { authorize: ["ADMIN"] },
         },
         {
           name: "CORequest",
           path: "CORequest",
           component: () => import("@/views/pages/CORequest"),
+          meta: { authorize: ["ADMIN"] },
         },
         {
           name: "COCompleted",
           path: "COCompleted",
           component: () => import("@/views/pages/COCompleted"),
+          meta: { authorize: ["ADMIN"] },
         },
-      ]
-      },
+      ],
+    },
     {
       name: "AdminRoutes",
       path: "/admin",
       redirect: "/",
       component: () => import("@/layouts/Layout"),
       children: [
-        // Components
-
         {
           name: "Home",
           path: "/",
           component: () => import("@/views/pages/home"),
+          meta: { authorize: ["USER"] },
         },
 
         {
           name: "Tracking Link",
           path: "trackinglink",
           component: () => import("@/views/pages/TrackingLink"),
+          meta: { authorize: ["USER"] },
         },
         {
           name: "Cash Out",
           path: "cashout",
           component: () => import("@/views/pages/CashOut"),
+          meta: { authorize: ["USER"] },
         },
         {
           name: "Profile",
           path: "profile",
           component: () => import("@/views/pages/Profile"),
+          meta: { authorize: ["USER"] },
         },
 
         // {
@@ -223,17 +230,19 @@ let router = new Router({
 router.beforeEach((to, from, next) => {
   const { authorize } = to.meta;
   const userRole = store.getters.userRole;
-  const isLoggedIn = store.getters.isLoggedIn;
+  // const isLoggedIn = store.getters.isLoggedIn;
+  const user = store.getters.getUser;
+  const isEmpty = Object.keys(user).length === 0;
 
   if (authorize) {
-    if (!isLoggedIn) {
+    if (isEmpty) {
       // not logged in so redirect to login page with the return url
-      return next({ path: "/login", query: { returnUrl: to.path } });
+      return next({ path: "/login" });
     }
     // check if route is restricted by role
     if (authorize.length && !authorize.includes(userRole)) {
       // role not authorised so redirect to home page
-      return next({ path: `/${userRole.toLowerCase()}` });
+      return next({ path: `/${userRole === "USER" ? "admin" : "S2Sadmin"}` });
     }
   }
   next();

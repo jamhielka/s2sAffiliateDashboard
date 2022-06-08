@@ -128,7 +128,7 @@ export default {
 
       this.$store
         .dispatch("login", data)
-        .then(() => {
+        .then((response) => {
           //if (
           // this.$store.getters.userRole === "ADMIN" ||
           // this.$store.getters.userRole === "RESBAKUNA"
@@ -139,12 +139,15 @@ export default {
           //} else {
 
           //}
-          console.log(this.$store.getters.userRole);
-          if (this.$store.getters.userRole === "USER") {
-            this.$router.push("/admin");
-          } else {
-            this.$router.push("/S2Sadmin");
-          }
+          // console.log(this.$store.getters.userRole);
+
+          this.$store.dispatch("ADD_USER", response).then(() => {
+            if (this.$store.getters.userRole === "USER") {
+              this.$router.push("/admin");
+            } else {
+              this.$router.push("/S2Sadmin");
+            }
+          });
 
           this.loading = false;
         })
@@ -157,15 +160,35 @@ export default {
   },
 
   created() {
-    // console.log(this.$store.getters.isLoggedIn)
-    if (this.$store.getters.isLoggedIn) {
-      return this.$router.push({ path: `/${this.userRole.toLowerCase()}` });
+    // if (this.$store.getters.isLoggedIn) {
+    //   return this.$router.push({ path: `/${this.userRole.toLowerCase()}` });
+    // }
+
+    const user = this.getUser;
+    if (!user.isEmpty) {
+      if (this.$store.getters.userRole === "USER") {
+        this.$router.push("/admin");
+      } else {
+        this.$router.push("/S2Sadmin");
+      }
     }
+
+    // this.$router.push({ path: `/${this.userRole}` });
   },
 
   computed: {
     userRole() {
       return this.$store.getters.userRole;
+    },
+
+    getUser() {
+      const user = this.$store.getters.getUser;
+      const isEmpty = Object.keys(user).length === 0;
+
+      return {
+        isEmpty: isEmpty,
+        user: user,
+      };
     },
   },
 };
