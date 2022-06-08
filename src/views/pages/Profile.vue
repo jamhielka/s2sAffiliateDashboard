@@ -21,7 +21,7 @@
             <h3
               class="title blue-grey--text text--darken-2 font-weight-regular"
             >
-            Profile
+              Profile
             </h3>
           </v-card-text>
           <v-divider></v-divider>
@@ -36,7 +36,7 @@
             <v-text-field
               type="text"
               class="form-control"
-               label="Firstname"
+              label="Firstname"
               placeholder="Enter your First Name"
               v-model="editedItem.firstname"
             ></v-text-field>
@@ -101,7 +101,6 @@
                 @change="onChangeCountry()"
                 required
                 return-object
-             
               ></v-select>
             </div>
             <div class="mt-4">
@@ -178,7 +177,7 @@ export default {
       province: "",
       city: "",
       address: "",
-      userid:""
+      userid: "",
     },
     GetRequest: {
       userid: "",
@@ -191,9 +190,10 @@ export default {
     selectedCity: null,
   }),
   components: {},
+
   created() {
-    this.initialize();
     this.loadCountry();
+    this.initialize();
     this.loadProvinces();
   },
 
@@ -204,6 +204,7 @@ export default {
       var xprovince = this.editedItem.province;
       console.log(xprovince);
     },
+
     async getAffiliateInfo() {
       // this.table.loading = true;
       // var TToken = localStorage.getItem("token");
@@ -217,54 +218,58 @@ export default {
         })
 
         .then((response) => {
-          console.log(response.data.data[0]);
           this.editedItem = response.data.data[0];
           this.selectedRegion = this.editedItem.region;
           this.selectedProvince = this.editedItem.province;
-       this.selectedCity=this.editedItem.city;
+          this.selectedCity = this.editedItem.city;
           this.editedItem.dob = moment(this.editedItem.dob).format(
             "YYYY-MM-DD"
           );
-        
 
           this.editedItem.userid = userid;
-         let region =this.selectedRegion;
-          let prov = this.selectedProvince;
-          var valobjReg= this.listCountry.filter(function (elem) {
+          let region = this.selectedRegion;
+          var prov = this.selectedProvince;
+          var valobjReg = this.listCountry.filter(function(elem) {
             if (elem.name == region) return elem._id;
           });
-          var valObj = this.listState.filter(function (elem) {
-            if (elem.name == prov) return elem._id;
-          });
-axios
-        .get(
-          `http://52.220.32.14:10210/api/provinces?regionId=${valobjReg[0]._id}`,
-          {
-            //headers: {
-            // Authorization: `Bearer ${this.authToken}`,
-            // Accept: "application/json",
-            //},
-          }
-        )
-        .then((res) => {
-          this.listState = res.data.data.provinces;
-         // this.selectedRegion = this.selectedRegion.name;
-        });
+
           axios
             .get(
-              `http://52.220.32.14:10210/api/cities?provinceId=${valObj[0]._id}`,
+              `http://52.220.32.14:10210/api/provinces?regionId=${valobjReg[0]._id}`,
               {
                 //headers: {
-                //  Authorization: `Bearer ${this.authToken}`,
-                //   Accept: "application/json",
-                // },
+                // Authorization: `Bearer ${this.authToken}`,
+                // Accept: "application/json",
+                //},
               }
             )
             .then((res) => {
-              this.listCities = res.data.data.cities;
-              this.editedItem.province = this.prov.name;
+              this.listState = res.data.data.provinces;
+
+              // this.selectedRegion = this.selectedRegion.name;
             });
-          //this.editedItem.city=this.editedItem.city;
+          setTimeout(() => {
+            var valObj = this.listState.filter(function(elem) {
+              if (elem.name == prov) return elem._id;
+            });
+            axios
+              .get(
+                `http://52.220.32.14:10210/api/cities?provinceId=${valObj[0]._id}`,
+                {
+                  //headers: {
+                  //  Authorization: `Bearer ${this.authToken}`,
+                  //   Accept: "application/json",
+                  // },
+                }
+              )
+              .then((res) => {
+                // console.log(res.data.data.cities);
+                this.listCities = res.data.data.cities;
+                // this.editedItem.province = this.prov.name;
+              });
+          }, 1000);
+
+          // this.editedItem.city=this.editedItem.city;
 
           //this.table.loading = false;
         })
@@ -273,6 +278,7 @@ axios
           console.log(e);
         });
     },
+
     loadCountry() {
       axios
         .get("http://52.220.32.14:10210/api/regions", {
@@ -288,7 +294,6 @@ axios
         });
     },
     loadProvinces() {
- 
       axios
         .get("http://52.220.32.14:10210/api/provinces", {
           //headers: {
@@ -337,18 +342,18 @@ axios
         .then((res) => {
           this.listCities = res.data.data.cities;
           this.selectedProvince = this.selectedProvince.name;
-          this.selectedCity=this.editedItem.city;
+          this.selectedCity = this.editedItem.city;
         });
     },
     save() {
       // var TToken = localStorage.getItem("token");
-           var userid = localStorage.getItem("userid");
+      var userid = localStorage.getItem("userid");
 
- this.editedItem.region = this.selectedRegion;
+      this.editedItem.region = this.selectedRegion;
       this.editedItem.province = this.selectedProvince;
-     this.editedItem.city=this.selectedCity;
- 
-      this.editedItem.userid=userid;
+      this.editedItem.city = this.selectedCity;
+
+      this.editedItem.userid = userid;
       this.$api
         .post("/Affiliate/UInfo", this.editedItem, {
           // headers: {
