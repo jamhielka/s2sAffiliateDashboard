@@ -63,7 +63,6 @@
       </v-btn>
     </v-card-actions>
   </v-card>
-
 </template>
 <style scoped>
 .position-relative {
@@ -89,13 +88,13 @@ export default {
       required: [(value) => !!value || "Required."],
       passwordRules: [
         (value) => !!value || "Required",
-        (value) => (value && /\d/.test(value)) || "At least one digit",
+        (value) => (value && value.length >= 6) || "minimum 6 characters",
         (value) =>
           (value && /[A-Z]{1}/.test(value)) || "At least one capital letter",
         (value) =>
           (value && /[^A-Za-z0-9]/.test(value)) ||
           "At least one special character",
-        (value) => (value && value.length >= 6) || "minimum 6 characters",
+        (value) => (value && /\d/.test(value)) || "At least one digit",
       ],
       emailRules: [
         (v) => !!v || "Required",
@@ -126,54 +125,47 @@ export default {
       var isvalid = this.$refs.form.validate();
       console.log(isvalid);
 
+      if (this.editedItem.password == this.editedItem.confirmpassword) {
+        this.editedItem.msisdn = localStorage.getItem("MOB");
 
-         if (this.editedItem.password==this.editedItem.confirmpassword) {
-        this.editedItem.msisdn= localStorage.getItem('MOB');
-     
-      this.$api
-        .post("/Affiliate/ChangePassword", this.editedItem, {
-          // headers: {
-          //   Authorization: TToken,
-          // },
-        })
-        .then((response) => {
-          console.log(response.data.data.status);
-          var message = response.data.data.Message;
-          //var status = response.data.data.status;
-     
-          if (message == "Saved Successfully") {
-              this.$swal("Thank you!", "Password is has been updated", "success");
-            
-            //alert();
-            this.$router.push("/Login");
-               localStorage.removeItem('MOB')
-          } else {
-            this.$swal("Oops!", message, "error");
+        this.$api
+          .post("/Affiliate/ChangePassword", this.editedItem, {
+            // headers: {
+            //   Authorization: TToken,
+            // },
+          })
+          .then((response) => {
+            console.log(response.data.data.status);
+            var message = response.data.data.Message;
+            //var status = response.data.data.status;
+
+            if (message == "Saved Successfully") {
+              this.$swal(
+                "Thank you!",
+                "Password is has been updated",
+                "success"
+              );
+
+              //alert();
+              this.$router.push("/Login");
+              localStorage.removeItem("MOB");
+            } else {
+              this.$swal("Oops!", message, "error");
               // alert(message);
               ///this.$router.push("/Login");
-          }
-        })
-        .catch((e) => {
-          console.log(e);
-             this.$swal("Oops!", "something wrong...", "error");
-           //alert();
+            }
+          })
+          .catch((e) => {
+            console.log(e);
+            this.$swal("Oops!", "something wrong...", "error");
+            //alert();
             //this.$router.push("/Login");
-        });
-      }
-      else
-      {
-         this.$swal("Oops!", "Password did not match!", "error");
+          });
+      } else {
+        this.$swal("Oops!", "Password did not match!", "error");
         //alert()
       }
-
-      
     },
-    
-
-
-      
-
-            
 
     resetValidation() {
       this.$refs.form.resetValidation();
