@@ -108,6 +108,7 @@
 <script>
 import GenerateLinkDialog from "../dialogs/GenerateLink.vue";
 import CardWidget from "../../components/CardWidget.vue";
+import moment from "moment";
 export default {
   components: {
     GenerateLinkDialog,
@@ -246,10 +247,10 @@ export default {
           console.log(newArr);
           for (let i = 0; i < newArr.length; i++) {
            this.Seriesdata.push(response.data.data[i].TCOUNT);
-           console.log(this.Seriesdata);
+        
             //this.LineSeriesdata.push(response.data.data[i].TCOUNT);
 
-            this.chartOptions.labels.push(response.data.data[i].TDATE);
+           this.chartOptions.labels.push(moment(response.data.data[i].TDATE).format("YYYY-MM-DD"));
           }
           this.SeriesItem.name = "Clicks";
           this.SeriesItem.type = "column";
@@ -260,8 +261,9 @@ export default {
           // this.LineSeriesItem.data = this.LineSeriesdata;
           // this.series.push(this.LineSeriesItem);
           this.series.push(this.SeriesItem);
-          console.log(this.series);
-          console.log(this.labels);
+            const newArrX = this.series;
+          console.log( newArrX);
+          console.log( this.labels);
           //this.table.loading = false;
         })
         .catch((e) => {
