@@ -233,7 +233,7 @@ export default {
           (value) =>
             (value && /[^A-Za-z0-9]/.test(value)) ||
             "At least one special character",
-          (value) => (value && /\d/.test(value)) || "At least one digit",
+         // (value) => (value && /\d/.test(value)) || "At least one digit",
         ],
         emailRules: [
           (v) => !!v || "Required",
