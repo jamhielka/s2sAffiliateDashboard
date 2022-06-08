@@ -274,7 +274,7 @@ export default {
       await this.$api
         .post("/Affiliate/SignUp", form)
         .then((response) => {
-          const res = response.data;
+          const res = response.data.data[0];
           this.loading = false;
           if (res.status == 1) {
             this.$swal("Oops.", res.Message, "error");
