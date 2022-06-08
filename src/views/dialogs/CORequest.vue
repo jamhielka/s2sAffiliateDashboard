@@ -160,9 +160,13 @@ export default {
           }
         )
         .then((res) => {
-          alert(res.data.data[0].Message);
-          this.scheduleItem.referenceNo="";
-          this.dialog = false;
+           this.$swal("Message", res.data.Message, "sucess");
+          //alert(res.data.Message);
+  
+          this.scheduleItem.ReferenceNo="";
+          this.close();
+          location.reload();
+          
         });
     },
   },

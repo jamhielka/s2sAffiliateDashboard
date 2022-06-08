@@ -11,6 +11,9 @@
       <template v-slot:[`item.dtCreated`]="{ item }">
     <span>{{new Date(item.dtCreated).toLocaleString('en-CA')}}</span>
   </template>
+      <template v-slot:[`item.amount`]="{ item }">
+    <span>{{item.amount.toFixed(2)}}</span>
+  </template>
     <template v-slot:top>
       <v-toolbar flat>
         <v-toolbar-title>Payout</v-toolbar-title>

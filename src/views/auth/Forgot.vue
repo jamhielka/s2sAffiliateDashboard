@@ -64,6 +64,7 @@ export default {
   methods: {
     validate() {
       this.$refs.form.validate();
+      this.valid=true;
       this.$api
         .post("/Affiliate/Checkemail", this.editedItem, {
           // headers: {
@@ -79,11 +80,12 @@ export default {
      
           if (status == "OK") {
               
-         
-            alert("OTP has been sent to your registered mobile number");
+          this.$swal("Thank you!", "OTP has been sent to your registered mobile number", "success");
+            //alert("OTP has been sent to your registered mobile number");
             this.$router.push("/ChangePassword");
           } else {
-          alert(message);
+              this.$swal("Oops.", message, "error");
+          //alert(message);
              //alert("OTP has been sent to your registered mobile number");
            // this.$router.push("/ChangePassword");
           }

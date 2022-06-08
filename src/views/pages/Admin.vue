@@ -59,28 +59,28 @@
       <v-col cols="12" lg="3" md="6">
       <card-widget
         icon="mdi-web"
-        label="This Month Affiliates"
+        label="Monthly Affiliates"
         :value="loadingData ? 0 : ReportItem2.NoAffiliate"
       ></card-widget>
     </v-col>
     <v-col cols="12" lg="3" md="6">
       <card-widget
         icon="mdi-mouse"
-        label="This Month Clicks"
+        label="Monthly Clicks"
         :value="loadingData ? 0 : ReportItem2.TTLClicks"
       ></card-widget>
     </v-col>
     <v-col cols="12" lg="3" md="6">
       <card-widget
         icon="mdi-account-star"
-        label="This Month SignUp"
+        label="Monthly SignUp"
         :value="loadingData ? 0 : ReportItem2.SignUp"
       ></card-widget>
     </v-col>
     <v-col cols="12" lg="3" md="6">
       <card-widget
         icon="mdi-currency-usd"
-        label="This Month Activated"
+        label="Monthly Activated"
         :value="loadingData ? 0 : ReportItem2.Activated"
       ></card-widget>
     </v-col>

@@ -36,9 +36,9 @@
 
           <v-list-item-content>
             <v-list-item-title>Current Incentive</v-list-item-title>
-            <v-list-item-content>{{
-              formatPrice(commission)
-            }}</v-list-item-content>
+            <v-list-item-content>
+              {{ commission.toFixed(2) }}
+              </v-list-item-content>
             <v-list-item-action
               ><v-btn x-small color="primary" dark @click="CashoutBTN()">
                 Cash-Out
@@ -268,7 +268,7 @@ export default {
     },
     formatPrice(value) {
       let val = value / 1;
-      return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      return val.toString().replace(/^(\d+(\.\d{0,2})?|\.?\d{1,2})$/, ",");
     },
   },
 };

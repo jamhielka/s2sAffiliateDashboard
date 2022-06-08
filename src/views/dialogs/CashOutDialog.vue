@@ -15,7 +15,7 @@
             ></v-select>
 
             <v-text-field
-              type="text"
+              type="number"
               class="form-control"
               label="Account Number"
               v-model="scheduleItem.accountNumber"
@@ -36,6 +36,7 @@
               placeholder="Amount"
               v-model="scheduleItem.amount"
               :rules="rules2"
+         
             ></v-text-field>
           </v-form>
         </v-card-text>
@@ -118,6 +119,7 @@ export default {
       paymentType: "",
       amount: "",
     },
+    Message:"",
     defaultItem: {
       name: "",
       code: "",
@@ -130,9 +132,11 @@ export default {
       required: [(value) => !!value || "Required."],
     },
     rules2: [
-         v => !!v || 'Required',
-         v => v >= 100 || 'Cash-out should be above P100',
-         v => v <= 5000 || 'Max should not be above P5,000',
+      (v) => !!v || "Required",
+
+      (v) => v >= 100 || "Cash-out should be above P100",
+      (v) => v <= 5000 || "Max should not be above P5,000",
+      // (v) => (v && /^(\d{0,2}\.)/.test(v)) || "At least 2 decimal places only."
     ],
   }),
   props: ["data", "dialog"],
@@ -189,18 +193,38 @@ export default {
           console.log(response.data.data[0]);
           //this.generatedlink= response.data.data[0].TrackingLink;
           //this.GenerateLinkdialog= true;
+            this.Message=response.data.data[0].Message;
 
-          var r = confirm(response.data.data[0].Message);
-          if (r == true) {
-            window.location.reload();
+             
+          if ((this.Message == "Insufficient Fund")) {
+             this.$swal("Oops!", this.Message, "error");
+           // alert(this.Message);
+          } else {
+
+                this.$swal("Thank you!", this.Message, "success");
+           
+                 this.close();
+             this.$router.push('/admin/cashout') 
+                this.scheduleItem.accountName= "";
+      this.scheduleItem.accountNumber= "";
+      this.scheduleItem.paymentType= "";
+      this.scheduleItem.amount= "";
+            
+          
           }
+          // alert(response.data.data[0].Message);
+          // var r = confirm(response.data.data[0].Message);
+          // if (r == true) {
+          //   window.location.reload();
+          // }
         })
         .catch((e) => {
           //this.table.loading = false;
           console.log(e);
         });
 
-      this.close();
+       
+         
     },
 
     closeDelete() {

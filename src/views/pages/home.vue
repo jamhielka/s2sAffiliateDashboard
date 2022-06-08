@@ -246,6 +246,7 @@ export default {
           console.log(newArr);
           for (let i = 0; i < newArr.length; i++) {
            this.Seriesdata.push(response.data.data[i].TCOUNT);
+           console.log(this.Seriesdata);
             //this.LineSeriesdata.push(response.data.data[i].TCOUNT);
 
             this.chartOptions.labels.push(response.data.data[i].TDATE);

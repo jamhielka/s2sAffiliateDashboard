@@ -61,7 +61,7 @@
                   indeterminate
                   class="mr-2"
                 ></v-progress-circular>
-                <span v-if="!loading">Submit</span>
+                <span v-if="!loading" >Submit</span>
                 <span v-if="loading">Submit in</span>
               </v-btn>
             </v-card-actions>
@@ -151,23 +151,28 @@ export default {
           //var status = response.data.data.status;
      
           if (message == "Saved Successfully") {
-            alert("Password is now updated");
+              this.$swal("Thank you!", "Password is has been updated", "success");
+            
+            //alert();
             this.$router.push("/Login");
                localStorage.removeItem('MOB')
           } else {
-               alert(message);
+            this.$swal("Oops!", message, "error");
+              // alert(message);
               ///this.$router.push("/Login");
           }
         })
         .catch((e) => {
           console.log(e);
-           alert("something wrong...");
+             this.$swal("Oops!", "something wrong...", "error");
+           //alert();
             //this.$router.push("/Login");
         });
       }
       else
       {
-        alert("Password did not match!")
+         this.$swal("Oops!", "Password did not match!", "error");
+        //alert()
       }
 
       

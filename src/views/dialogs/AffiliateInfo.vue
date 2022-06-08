@@ -55,7 +55,7 @@
               </div>
                <div class="col-md-12" style="padding: 0">
                 <h5 style="font-size: small">
-                  Wallet Balance: {{ this.scheduleItem.Revenue }}
+                  Wallet Balance: {{ this.scheduleItem.Revenue.toFixed(2) }}
                 </h5>
               </div>
             </div>

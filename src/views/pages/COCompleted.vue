@@ -4,7 +4,7 @@
     :headers="headers"
     :items="desserts"
     class="elevation-1"
-    :sort-by="['dtCreated']"
+    :sort-by="['dtApproved']"
     :sort-desc="[true]"
   >
     <template v-slot:[`item.dtCreated`]="{ item }">
