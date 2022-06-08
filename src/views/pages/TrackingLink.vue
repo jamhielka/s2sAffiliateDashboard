@@ -11,30 +11,25 @@
       <span>{{ new Date(item.dtCreated).toLocaleString("en-CA") }}</span>
     </template>
     <template v-slot:[`item.LINK`]="{ item }">
-      <input
-        type="label"
-        
-      
-        readonly
-        :value="item.LINK"
-        style="width: 250px"
-      />
-   
-    <v-tooltip bottom>
-      <template v-slot:activator="{ on, attrs }">
-    
+      <input type="label" readonly :value="item.LINK" style="width: 250px" />
 
-            <v-btn    v-bind="attrs"
-          v-on="on" icon color="red" @click="copy(item)" target="Copy">
-        <v-icon>mdi-content-copy</v-icon>
-      </v-btn>
-      </template>
-      <span>Copy</span>
-    </v-tooltip>
-  
-   
+      <v-tooltip bottom>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+            v-bind="attrs"
+            v-on="on"
+            icon
+            color="red"
+            @click.prevent="copy(item)"
+            target="Copy"
+          >
+            <v-icon>mdi-content-copy</v-icon>
+          </v-btn>
+        </template>
+        <span>Copy</span>
+      </v-tooltip>
     </template>
- 
+
     <template v-slot:top>
       <v-toolbar flat>
         <v-toolbar-title>Affiliate Link</v-toolbar-title>
@@ -325,16 +320,45 @@ export default {
     GeneratedLinkBTN() {
       this.editDialog.dialog = true;
     },
-    copy(item) {
-    //   console.log()
-    // navigator.clipboard.writeText();
-var text = item.LINK;
-navigator.clipboard.writeText(text).then(function() {
-  console.log('Async: Copying to clipboard was successful!');
-}, function(err) {
-  console.error('Async: Could not copy text: ', err);
-});
 
+    // copy(item) {
+    //   //   console.log()
+    //   // navigator.clipboard.writeText();
+    //   var text = item.LINK;
+    //   navigator.clipboard.writeText(text).then(
+    //     function() {
+    //       console.log("Async: Copying to clipboard was successful!");
+    //     },
+    //     function(err) {
+    //       console.error("Async: Could not copy text: ", err);
+    //     }
+    //   );
+    // },
+
+    copy(item) {
+      const textToCopy = item.LINK;
+      // navigator clipboard api needs a secure context (https)
+
+      if (navigator.clipboard && window.isSecureContext) {
+        // navigator clipboard api method'
+        return navigator.clipboard.writeText(textToCopy);
+      } else {
+        // text area method
+        let textArea = document.createElement("textarea");
+        textArea.value = textToCopy;
+        // make the textarea out of viewport
+        textArea.style.position = "fixed";
+        textArea.style.left = "-999999px";
+        textArea.style.top = "-999999px";
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        return new Promise((res, rej) => {
+          // here the magic happens
+          document.execCommand("copy") ? res() : rej();
+          textArea.remove();
+        });
+      }
     },
   },
 };
