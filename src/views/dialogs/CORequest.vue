@@ -160,12 +160,17 @@ export default {
           }
         )
         .then((res) => {
-           this.$swal("Message", res.data.Message, "sucess");
+          if (res.data.status==1) {
+             this.$swal("Opps!", res.data.Message, "error");
+          } else {
+              this.$swal("Thank you", res.data.Message, "sucess");
+          }
+         
           //alert(res.data.Message);
   
           this.scheduleItem.ReferenceNo="";
-          this.close();
-          location.reload();
+       
+        
           
         });
     },

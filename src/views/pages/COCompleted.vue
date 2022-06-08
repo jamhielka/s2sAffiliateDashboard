@@ -10,6 +10,9 @@
     <template v-slot:[`item.dtCreated`]="{ item }">
       <span>{{ new Date(item.dtCreated).toLocaleString("en-CA") }}</span>
     </template>
+      <template v-slot:[`item.amount`]="{ item }">
+      <span>{{ item.amount.toFixed(2) }}</span>
+    </template>
     <template v-slot:[`item.LINK`]="{ item }">
       <input
         type="label"
