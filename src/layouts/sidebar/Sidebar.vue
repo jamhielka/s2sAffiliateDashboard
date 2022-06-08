@@ -37,8 +37,8 @@
           <v-list-item-content>
             <v-list-item-title>Current Incentive</v-list-item-title>
             <v-list-item-content>
-              {{ commission.toFixed(2) }}
-              </v-list-item-content>
+              {{   Number(commission).toFixed(2) }}
+            </v-list-item-content>
             <v-list-item-action
               ><v-btn x-small color="primary" dark @click="CashoutBTN()">
                 Cash-Out
