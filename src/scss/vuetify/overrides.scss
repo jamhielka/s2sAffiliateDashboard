@@ -3,7 +3,8 @@
 @import 'layout';
 @import 'sidebar';
 @import 'buttons';
-@import '../custom';
+
 .theme--light .v-main{
   background-color: #eef5f9;
 }
+@import '../custom';

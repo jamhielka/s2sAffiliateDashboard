@@ -1,38 +1,55 @@
-
-
 <template>
-  <v-main>
-    <v-container fluid fill-height>
+  <!-- <v-main> -->
+  <!-- <v-container fluid fill-height>
       <v-layout align-center justify-center>
-        <v-flex xs12 sm8 md4>
-          <v-card class="elevation-12">
-            <v-toolbar dark color="primary">
+        <v-flex xs12 sm8 md4> -->
+  <v-card class="elevation-12 rounded-card">
+    <!-- <v-toolbar dark color="primary">
               <v-toolbar-title>Forgot Password</v-toolbar-title>
-            </v-toolbar>
-            <v-card-text>
-              <v-form ref="form" v-model="valid" lazy-validation>
-                <v-text-field
-                  v-model="editedItem.email"
-                  :rules="emailRules"
-                  label="E-mail"
-                  required
-                ></v-text-field>
+            </v-toolbar> -->
+    <v-card-title>Forgot Password</v-card-title>
+    <v-divider></v-divider>
+    <v-card-text>
+      <v-form ref="form" v-model="valid" lazy-validation>
+        <v-text-field
+          v-model="editedItem.email"
+          :rules="emailRules"
+          label="Email Address"
+          required
+          placeholder="Email Address"
+          outlined
+        ></v-text-field>
 
-                <v-btn
-                  :disabled="!valid"
-                  color="success"
-                  class="mr-4"
-                  @click="validate"
-                >
-                  Submit
-                </v-btn>
-              </v-form>
-            </v-card-text>
-          </v-card>
-        </v-flex>
+        <v-btn
+          :disabled="!valid"
+          color="#3b054f"
+          class="mr-4 mb-3 text-white"
+          @click="validate"
+          large
+          rounded
+          block
+        >
+          Submit
+        </v-btn>
+
+        <v-btn
+          color="#218e8a"
+          to="register"
+          class="text-white"
+          large
+          rounded
+          block
+          @click.prevent="cancel"
+        >
+          Cancel
+        </v-btn>
+      </v-form>
+    </v-card-text>
+  </v-card>
+  <!-- </v-flex>
       </v-layout>
     </v-container>
-  </v-main>
+  </v-main> -->
 </template>
 <script>
 export default {
@@ -75,10 +92,11 @@ export default {
           console.log(response);
           var message = response.data.data.Message;
 
-               localStorage.setItem('MOB', response.data.data.msisdn);
-         var status = response.data.status;
-     
+          localStorage.setItem("MOB", response.data.data.msisdn);
+          var status = response.data.status;
+
           if (status == "OK") {
+<<<<<<< HEAD
               
           this.$swal("Thank you!", "OTP has been sent to your registered mobile number", "success");
             //alert("OTP has been sent to your registered mobile number");
@@ -88,12 +106,20 @@ export default {
           //alert(message);
              //alert("OTP has been sent to your registered mobile number");
            // this.$router.push("/ChangePassword");
+=======
+            alert("OTP has been sent to your registered mobile number");
+            this.$router.push("/ChangePassword");
+          } else {
+            alert(message);
+            //alert("OTP has been sent to your registered mobile number");
+            // this.$router.push("/ChangePassword");
+>>>>>>> 1ee3ce659f444e7a7d4115d2929cd92ce4bc6395
           }
         })
         .catch((e) => {
           console.log(e);
-           alert("OTP has been sent to your registered mobile number");
-            this.$router.push("/ChangePassword");
+          alert("OTP has been sent to your registered mobile number");
+          this.$router.push("/ChangePassword");
         });
     },
     reset() {
@@ -102,6 +128,21 @@ export default {
     resetValidation() {
       this.$refs.form.resetValidation();
     },
+
+    cancel() {
+      this.$router.push("/login");
+    },
   },
 };
 </script>
+
+<style scoped>
+.rounded-card {
+  border-radius: 15px;
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+.text-white {
+  color: #fff;
+}
+</style>

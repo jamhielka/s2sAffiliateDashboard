@@ -1,8 +1,24 @@
 // custom css here
 
-.admin-schedule .v-data-table__wrapper{
-    overflow: scroll;
+.admin-schedule .v-data-table__wrapper {
+  overflow: scroll;
 }
-.admin-schedule table{
-    width: 400%!important;
+.admin-schedule table {
+  width: 400% !important;
 }
+
+.tagline {
+  font-size: 3rem;
+  text-align: center;
+  line-height: 1.2;
+  padding: 0px 50px;
+  color: #fff;
+  font-weight: 400;
+}
+
+
+.text-white {
+  color: #fff;
+}
+
+
