@@ -3,28 +3,6 @@
     <v-card-title>Change Password</v-card-title>
     <v-divider></v-divider>
 
-<<<<<<< HEAD
-              <v-btn
-                color="primary"
-                class="px-12"
-                @click="ChangePassword"
-                :disabled="loading"
-              >
-                <v-progress-circular
-                  v-if="loading"
-                  indeterminate
-                  class="mr-2"
-                ></v-progress-circular>
-                <span v-if="!loading" >Submit</span>
-                <span v-if="loading">Submit in</span>
-              </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-flex>
-      </v-layout>
-    </v-container>
-  </v-main>
-=======
     <v-card-text>
       <v-snackbar v-model="snackbar" :color="snackbarColor" :timeout="2000">
         {{ text }}
@@ -85,7 +63,7 @@
       </v-btn>
     </v-card-actions>
   </v-card>
->>>>>>> 1ee3ce659f444e7a7d4115d2929cd92ce4bc6395
+
 </template>
 <style scoped>
 .position-relative {
@@ -106,7 +84,7 @@ export default {
     snackbarColor: "default",
     otp: "",
     text: "",
-    expectedOtp: "133707",
+    expectedOtp: "",
     rules: {
       required: [(value) => !!value || "Required."],
       passwordRules: [
@@ -148,7 +126,7 @@ export default {
       var isvalid = this.$refs.form.validate();
       console.log(isvalid);
 
-<<<<<<< HEAD
+
          if (this.editedItem.password==this.editedItem.confirmpassword) {
         this.editedItem.msisdn= localStorage.getItem('MOB');
      
@@ -189,47 +167,14 @@ export default {
       }
 
       
-    }
+    },
     
 
 
       
-=======
-      if (isvalid == true) {
-        if (this.editedItem.password == this.editedItem.confirmpassword) {
-          this.editedItem.msisdn = localStorage.getItem("MOB");
 
-          this.$api
-            .post("/Affiliate/ChangePassword", this.editedItem, {
-              // headers: {
-              //   Authorization: TToken,
-              // },
-            })
-            .then((response) => {
-              console.log(response.data.data.status);
-              var message = response.data.data.Message;
-              //var status = response.data.data.status;
+            
 
-              if (message == "Saved Successfully") {
-                alert("Password is now updated");
-                this.$router.push("/Login");
-                localStorage.removeItem("MOB");
-              } else {
-                alert(message);
-                ///this.$router.push("/Login");
-              }
-            })
-            .catch((e) => {
-              console.log(e);
-              alert("something wrong...");
-              //this.$router.push("/Login");
-            });
-        } else {
-          alert("Password did not match!");
-        }
-      }
->>>>>>> 1ee3ce659f444e7a7d4115d2929cd92ce4bc6395
-    },
     resetValidation() {
       this.$refs.form.resetValidation();
     },

@@ -90,36 +90,28 @@ export default {
         })
         .then((response) => {
           console.log(response);
-          var message = response.data.data.Message;
+         // var message = response.data.data.Message;
 
           localStorage.setItem("MOB", response.data.data.msisdn);
           var status = response.data.status;
 
           if (status == "OK") {
-<<<<<<< HEAD
-              
-          this.$swal("Thank you!", "OTP has been sent to your registered mobile number", "success");
+               this.$swal("Thank you!", "OTP has been sent to your registered mobile number", "success");
             //alert("OTP has been sent to your registered mobile number");
             this.$router.push("/ChangePassword");
           } else {
-              this.$swal("Oops.", message, "error");
-          //alert(message);
-             //alert("OTP has been sent to your registered mobile number");
-           // this.$router.push("/ChangePassword");
-=======
-            alert("OTP has been sent to your registered mobile number");
-            this.$router.push("/ChangePassword");
-          } else {
-            alert(message);
+            
+             this.$swal("Oops!", "Invalid Email Address", "error");
+            //alert(message);
             //alert("OTP has been sent to your registered mobile number");
             // this.$router.push("/ChangePassword");
->>>>>>> 1ee3ce659f444e7a7d4115d2929cd92ce4bc6395
           }
         })
         .catch((e) => {
           console.log(e);
-          alert("OTP has been sent to your registered mobile number");
-          this.$router.push("/ChangePassword");
+          this.$swal("Oops!", e, "error");
+          // alert("OTP has been sent to your registered mobile number");
+          // this.$router.push("/ChangePassword");
         });
     },
     reset() {
