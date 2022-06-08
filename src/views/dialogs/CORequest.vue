@@ -164,8 +164,8 @@ export default {
           //alert(res.data.Message);
   
           this.scheduleItem.ReferenceNo="";
-          this.close();
-          location.reload();
+       
+        
           
         });
     },
