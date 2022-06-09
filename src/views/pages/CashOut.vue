@@ -8,9 +8,7 @@
       :sort-by="['dtCreated']"
     :sort-desc="[ true]"
   >
-   <template v-slot:no-data>
-          <p>No Cash-Out Request</p>
-      </template>
+  
       <template v-slot:[`item.dtCreated`]="{ item }">
     <span>{{new Date(item.dtCreated).toLocaleString('en-CA')}}</span>
   </template>

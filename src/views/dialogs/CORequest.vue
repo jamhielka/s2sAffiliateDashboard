@@ -164,6 +164,7 @@ export default {
              this.$swal("Opps!", res.data.Message, "error");
           } else {
               this.$swal("Thank you", res.data.Message, "sucess");
+              this.close();
           }
          
           //alert(res.data.Message);
