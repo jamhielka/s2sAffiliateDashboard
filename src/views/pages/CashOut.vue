@@ -127,6 +127,7 @@ export default {
         sortable: true,
         value: "dtCreated",
       },
+        { text: "TRXN_ID", value: "trxnId" },
       {
         text: "Amount",
         align: "start",
@@ -138,6 +139,7 @@ export default {
           { text: "Payment Type", value: "paymentType" },
       { text: "is Approved", value: "isApproved" },
        { text: "Approved By", value: "ApprovedBy" },
+
         { text: "Date Approved", value: "dtApproved" },
               { text: "Reference No", value: "ReferenceNo" },
       //{ text: "Actions", value: "actions", sortable: false },

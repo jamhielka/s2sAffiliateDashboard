@@ -136,7 +136,7 @@ export default {
 
       (v) => v >= 100 || "Cash-out should be above P100",
       (v) => v <= 5000 || "Max should not be above P5,000",
-      // (v) => (v && /^(\d{0,2}\.)/.test(v)) || "At least 2 decimal places only."
+     (v) => (v && /^[0-9]*(\.[0-9]{0,2})?$/.test(v)) || "At least 2 decimal places only."
     ],
   }),
   props: ["data", "dialog"],

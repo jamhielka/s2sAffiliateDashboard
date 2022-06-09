@@ -161,10 +161,38 @@ export default {
         )
         .then((res) => {
           if (res.data.status==1) {
-             this.$swal("Opps!", res.data.Message, "error");
-          } else {
-              this.$swal("Thank you", res.data.Message, "sucess");
+          // this.$swal("Opps!", res.data.Message, "error");
+         
+          }else if(res.data.status==2){
+ 
+            this.$swal({
+    title: "Oops!",
+    text: res.data.Message,
+    type: "warning",
+    showCancelButton: false,
+    confirmButtonColor: '#DD6B55',
+    confirmButtonText: 'OK',
+    //cancelButtonText: "No, cancel it!"
+ }).then(
+       function () { location.reload() },
+       function () { return false; });
+          }
+           else {
+              //this.$swal("Thank you", res.data.Message, "sucess");
+            
+            this.$swal({
+    title: "Thank you",
+    text: res.data.Message,
+    type: "success",
+    showCancelButton: false,
+    confirmButtonColor: '#DD6B55',
+    confirmButtonText: 'OK',
+    //cancelButtonText: "No, cancel it!"
+ }).then(
+       function () { location.reload() },
+       function () { return false; });
               this.close();
+            
           }
          
           //alert(res.data.Message);
