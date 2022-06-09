@@ -193,8 +193,12 @@ export default {
 
   created() {
     this.loadCountry();
-    this.initialize();
     this.loadProvinces();
+
+    setTimeout(() => {
+        this.initialize();
+    }, 1000);
+  
   },
 
   methods: {
