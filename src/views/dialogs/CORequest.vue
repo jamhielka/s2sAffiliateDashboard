@@ -88,14 +88,14 @@ export default {
       amount: "",
       id: "",
       ReferenceNo: "",
-      userid:"",
+      userid: "",
     },
     COREQ: {
       userId: "",
       payoutId: "",
       adminUser: "",
-       isApproved: true,
-       referenceNo:"",
+      isApproved: true,
+      referenceNo: "",
     },
 
     dialog: false,
@@ -113,9 +113,9 @@ export default {
       this.scheduleItem.acctNumber = this.$props.data.item.acctNumber;
       this.scheduleItem.paymentType = this.$props.data.item.paymentType;
       this.scheduleItem.amount = this.$props.data.item.amount;
-     this.scheduleItem.id = this.$props.data.item.id;
+      this.scheduleItem.id = this.$props.data.item.id;
       this.scheduleItem.userid = this.$props.data.item.userid;
-     //this.loadShift(UID);
+      //this.loadShift(UID);
     },
   },
   methods: {
@@ -143,64 +143,63 @@ export default {
       this.$emit("ItemConfirmed", true);
     },
     CashOutConfirm() {
-
-        this.COREQ.userId=this.scheduleItem.userid;
-        this.COREQ.payoutId=this.scheduleItem.id;
-        this.COREQ.referenceNo=this.scheduleItem.ReferenceNo;
-        this.COREQ.adminUser="Admin";
+      this.COREQ.userId = this.scheduleItem.userid;
+      this.COREQ.payoutId = this.scheduleItem.id;
+      this.COREQ.referenceNo = this.scheduleItem.ReferenceNo;
+      this.COREQ.adminUser = "Admin";
       this.$api
-        .post(
-          "/Admin/PayoutApproved",
-          this.COREQ,
-          {
-            //headers: {
-            // Authorization: `Bearer ${this.authToken}`,
-            // Accept: "application/json",
-            //},
-          }
-        )
+        .post("/Admin/PayoutApproved", this.COREQ, {
+          //headers: {
+          // Authorization: `Bearer ${this.authToken}`,
+          // Accept: "application/json",
+          //},
+        })
         .then((res) => {
-          if (res.data.status==1) {
-          // this.$swal("Opps!", res.data.Message, "error");
-         
-          }else if(res.data.status==2){
- 
+          if (res.data.status == 1) {
+            // this.$swal("Opps!", res.data.Message, "error");
+          } else if (res.data.status == 2) {
             this.$swal({
-    title: "Oops!",
-    text: res.data.Message,
-    type: "warning",
-    showCancelButton: false,
-    confirmButtonColor: '#DD6B55',
-    confirmButtonText: 'OK',
-    //cancelButtonText: "No, cancel it!"
- }).then(
-       function () { location.reload() },
-       function () { return false; });
-          }
-           else {
-              //this.$swal("Thank you", res.data.Message, "sucess");
-            
+              title: "Oops!",
+              text: res.data.Message,
+              type: "warning",
+              showCancelButton: false,
+              confirmButtonColor: "#DD6B55",
+              confirmButtonText: "OK",
+              //cancelButtonText: "No, cancel it!"
+            }).then(
+              function () {
+                location.reload();
+              },
+              function () {
+                return false;
+              }
+            );
+          } else {
+            //this.$swal("Thank you", res.data.Message, "sucess");
+
             this.$swal({
-    title: "Thank you",
-    text: res.data.Message,
-    type: "success",
-    showCancelButton: false,
-    confirmButtonColor: '#DD6B55',
-    confirmButtonText: 'OK',
-    //cancelButtonText: "No, cancel it!"
- }).then(
-       function () { location.reload() },
-       function () { return false; });
-              this.close();
-            
+              title: "Thank you",
+              text: res.data.Message,
+              type: "success",
+              showCancelButton: false,
+              confirmButtonColor: "#DD6B55",
+              confirmButtonText: "OK",
+              //cancelButtonText: "No, cancel it!"
+            }).then(
+              function () {
+                 this.scheduleItem.ReferenceNo = "";
+                location.reload();
+              },
+              function () {
+                return false;
+              }
+            );
+            this.close();
           }
-         
+
           //alert(res.data.Message);
-  
-          this.scheduleItem.ReferenceNo="";
-       
-        
-          
+
+         
         });
     },
   },
