@@ -7,6 +7,7 @@
         <v-card-title class="text-h5">Cash-out Request</v-card-title>
         <v-card-text>
           <v-card-title>
+             <v-form ref="form" lazy-validation>
             <div class="row">
               <div class="col-md-12" style="padding: 0">
                 <h5 style="font-size: small">
@@ -39,6 +40,7 @@
                 ></v-text-field>
               </div>
             </div>
+             </v-form>
           </v-card-title>
 
           <!-- 
@@ -143,6 +145,9 @@ export default {
       this.$emit("ItemConfirmed", true);
     },
     CashOutConfirm() {
+       if (!this.$refs.form.validate()) {
+        return false;
+      }
       this.COREQ.userId = this.scheduleItem.userid;
       this.COREQ.payoutId = this.scheduleItem.id;
       this.COREQ.referenceNo = this.scheduleItem.ReferenceNo;
