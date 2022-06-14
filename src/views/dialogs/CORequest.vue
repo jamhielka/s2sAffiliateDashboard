@@ -156,6 +156,22 @@ export default {
         })
         .then((res) => {
           if (res.data.status == 1) {
+            this.$swal({
+              title: "Oops!",
+              text: res.data.Message,
+              type: "warning",
+              showCancelButton: false,
+              confirmButtonColor: "#DD6B55",
+              confirmButtonText: "OK",
+              //cancelButtonText: "No, cancel it!"
+            }).then(
+              function () {
+                 return false;
+              },
+              function () {
+                return false;
+              }
+            );
             // this.$swal("Opps!", res.data.Message, "error");
           } else if (res.data.status == 2) {
             this.$swal({
