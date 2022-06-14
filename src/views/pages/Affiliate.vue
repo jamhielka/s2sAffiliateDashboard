@@ -13,6 +13,10 @@
    <a @click="handleClick(slotData.item.id)">{{ slotData.item.NAME }}</a>
 
 </template>
+<template v-slot:[`item.Revenue`]="slotData">
+   {{ slotData.item.Revenue.toFixed(2) }}
+
+</template>
 
     <template v-slot:[`item.dtCreated`]="{ item }">
       <span>{{ new Date(item.dtCreated).toLocaleString("en-CA") }}</span>

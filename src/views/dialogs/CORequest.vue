@@ -67,8 +67,16 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="warning" text @click="CashOutConfirm()">Done</v-btn>
-          <v-btn color="primary" text @click="close()">Close</v-btn>
+            <v-btn
+                :disabled="!valid"
+                color="warning"
+                class="mr-4"
+             @click="CashOutConfirm()"
+              >
+                Submit
+              </v-btn>
+          <!-- <v-btn color="warning" text @click="CashOutConfirm()">Done</v-btn> -->
+          <v-btn  color="success" class="mr-4"  @click="close()">Close</v-btn>
 
           <v-spacer></v-spacer>
         </v-card-actions>
@@ -81,6 +89,7 @@
 //import moment from "moment";
 export default {
   data: () => ({
+    valid:true,
     scheduleItem: {
       trxnid: "",
       name: "",
