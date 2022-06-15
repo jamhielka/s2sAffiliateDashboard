@@ -406,6 +406,9 @@ export default {
         });
     },
     save() {
+          if (!this.$refs.form.validate()) {
+        return false;
+      }
       // var TToken = localStorage.getItem("token");
       var userid = localStorage.getItem("userid");
 
