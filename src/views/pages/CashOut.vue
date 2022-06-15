@@ -10,9 +10,11 @@
   >
   
       <template v-slot:[`item.dtCreated`]="{ item }">
+          <div v-if="!item.dtCreated==''|| !item.dtCreated==null">
     <span>{{new Date(item.dtCreated).toLocaleString('en-CA')}}</span>
+          </div>
+   
   </template>
-
 
       <!-- <template v-slot:[`item.amount`]="{ item }">
 

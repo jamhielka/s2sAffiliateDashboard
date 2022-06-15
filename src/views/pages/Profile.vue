@@ -26,12 +26,14 @@
           </v-card-text>
           <v-divider></v-divider>
           <v-card-text>
+              <v-form ref="form" lazy-validation>
             <v-text-field
               type="text"
               class="form-control"
               label="Lastname"
               placeholder="Enter your Last Name"
               v-model="editedItem.lastname"
+               :rules="rules.required"
             ></v-text-field>
             <v-text-field
               type="text"
@@ -39,13 +41,24 @@
               label="Firstname"
               placeholder="Enter your First Name"
               v-model="editedItem.firstname"
+               :rules="rules.required"
             ></v-text-field>
             <v-text-field
-              type="text"
+              type="tel"
               class="form-control"
               label="Mobile Number"
-              placeholder="Enter your Mobile Number"
+              placeholder="+63915XXXXXXX"
               v-model="editedItem.msisdn"
+              :rules="rules.mobileNumberRules"
+               v-mask="'+639#########'"
+                autocomplete="null"
+          @keydown="catchZero($event)"
+          @keyup="catchZero($event)"
+          @copy.prevent
+          @paste.prevent
+          @click.right.prevent
+          outlined
+          masked="false"
             ></v-text-field>
 
             <v-text-field
@@ -61,6 +74,7 @@
               label="Email"
               filled
               background-color="transparent"
+                :rules="rules.emailRules"
             ></v-text-field>
             <!-- <v-text-field
               v-model="password"
@@ -88,7 +102,7 @@
                 v-model="editedItem.gender"
                 :items="['Male', 'Female']"
                 label="Gender"
-                required
+                   :rules="rules.required"
               ></v-select>
             </div>
             <div class="mt-4">
@@ -99,7 +113,7 @@
                 item-value="name"
                 label="Region"
                 @change="onChangeCountry()"
-                required
+                 :rules="rules.required"
                 return-object
               ></v-select>
             </div>
@@ -112,7 +126,7 @@
                 label="Province"
                 @change="onChangeState"
                 return-object
-                required
+                 :rules="rules.required"
               ></v-select>
             </div>
             <div class="mt-4">
@@ -122,7 +136,7 @@
                 item-text="name"
                 item-value="name"
                 label="City"
-                required
+                :rules="rules.required"
               ></v-select>
             </div>
             <v-textarea
@@ -132,13 +146,30 @@
               label="Address"
               v-model="editedItem.address"
             ></v-textarea>
-            <v-btn
-              class="text-capitalize mt-5 element-0"
-              color="success"
-              @click="save()"
-              >Submit</v-btn
-            >
+              </v-form>
+           
           </v-card-text>
+           <v-card-actions>
+      <v-spacer></v-spacer>
+    
+      <v-btn
+        class="text-white"
+        @click="save()"
+        :disabled="loading"
+        color="primary"
+        large
+        rounded
+        block
+      >
+        <v-progress-circular
+          v-if="loading"
+          indeterminate
+          class="mr-2"
+        ></v-progress-circular>
+        <span v-if="!loading">Submit</span>
+        <span v-if="loading">Submitting</span>
+      </v-btn>
+    </v-card-actions>
         </v-card>
       </v-col>
     </v-row>
@@ -152,6 +183,7 @@ export default {
   name: "Profile",
 
   data: () => ({
+     loading: false,
     dtext: "George deo",
     emailtext: "",
     password: "",
@@ -160,11 +192,11 @@ export default {
     checkbox2: "",
     checkbox3: "",
     show1: false,
-    rules: {
-      required: (value) => !!value || "Required.",
-      min: (v) => v.length >= 8 || "Min 8 characters",
-      emailMatch: () => "The email and password you entered don't match",
-    },
+    // rules: {
+    //   required: (value) => !!value || "Required.",
+    //   min: (v) => v.length >= 8 || "Min 8 characters",
+    //   emailMatch: () => "The email and password you entered don't match",
+    // },
     items: ["London", "India", "America"],
     editedItem: {
       lastname: "",
@@ -188,6 +220,30 @@ export default {
     selectedRegion: null,
     selectedProvince: null,
     selectedCity: null,
+     rules: {
+        required: [(value) => !!value || "Required."],
+        passwordRules: [
+          (value) => !!value || "Required",
+          (value) => (value && value.length >= 6) || "Minimum 6 characters",
+          (value) =>
+            (value && /[A-Z]{1}/.test(value)) || "At least one capital letter",
+          (value) =>
+            (value && /[^A-Za-z0-9]/.test(value)) ||
+            "At least one special character",
+          (value) => (value && /\d/.test(value)) || "At least one number",
+        ],
+        emailRules: [
+          (v) => !!v || "Required",
+          (v) =>
+            /^(([^<>()[\]\\.,;:\s@']+(\.[^<>()\\[\]\\.,;:\s@']+)*)|('.+'))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+              v
+            ) || "E-mail must be valid",
+        ],
+        mobileNumberRules: [
+          (value) => !!value || "Required",
+          (value) => (value && value.length >= 13) || "Invalid mobile number",
+        ],
+      },
   }),
   components: {},
 
@@ -365,17 +421,64 @@ export default {
           // },
         })
         .then((response) => {
-          console.log(response);
+          //console.log(response);
           //this.$emit("obj", true);
           // this.loadingBtn = false;
 
-          this.dialog = false;
-          alert("User info is successfully saved");
+       
+
+            if (response.data.data[0].status == 0) {
+                 this.dialog = false;
+          //alert("User info is successfully saved");
+           this.$swal({
+              title: "Thank you",
+              text: response.data.data[0].Message,
+              type: "success",
+              showCancelButton: false,
+              confirmButtonColor: "#DD6B55",
+              confirmButtonText: "OK",
+              //cancelButtonText: "No, cancel it!"
+            }).then(
+              function () {
+                 return false;
+              },
+              function () {
+                return false;
+              }
+            );
+            } else {
+               this.$swal({
+              title: "Oops!",
+              text: response.data.data[0].Message,
+              type: "warning",
+              showCancelButton: false,
+              confirmButtonColor: "#DD6B55",
+              confirmButtonText: "OK",
+              //cancelButtonText: "No, cancel it!"
+            }).then(
+              function () {
+                 return false;
+              },
+              function () {
+                return false;
+              }
+            );
+            }
         })
         .catch((e) => {
           console.log(e);
           //this.loadingBtn = false;
         });
+    },
+     catchZero(e) {
+      if (e.target.value == "+63 0") {
+        // return;
+        // console.log("Adasd")
+        this.form.pmsisdn = "";
+      }
+    },
+    keydown: function(e) {
+      console.log(e);
     },
   },
 };

@@ -8,7 +8,10 @@
     :sort-desc="[true]"
   >
     <template v-slot:[`item.amount`]="slotData">
-   <a @click="handleClick(slotData)">{{ slotData.item.amount.toFixed(2) }}</a>
+      <div v-if="item.amount!=''">
+         <a @click="handleClick(slotData)">{{ slotData.item.amount.toFixed(2) }}</a>
+      </div>
+  
 
 </template>
     <template v-slot:[`item.dtCreated`]="{ item }">
