@@ -195,13 +195,8 @@ export default {
           //this.GenerateLinkdialog= true;
             this.Message=response.data.data[0].Message;
 
-             
-          if ((this.Message == "Insufficient Fund")) {
-             this.$swal("Oops!", this.Message, "error");
-           // alert(this.Message);
-          } else {
-
-                this.$swal("Thank you!", this.Message, "success");
+              if (response.data.data[0].status == 0) {
+                   this.$swal("Thank you!", this.Message, "success");
            
                  this.close();
              this.$router.push('/admin/cashout') 
@@ -209,9 +204,26 @@ export default {
       this.scheduleItem.accountNumber= "";
       this.scheduleItem.paymentType= "";
       this.scheduleItem.amount= "";
+              }
+              else{
+                  this.$swal("Oops!", this.Message, "error");
+              }
+      //     if ((this.Message == "Insufficient Fund")) {
+      //        this.$swal("Oops!", this.Message, "error");
+      //      // alert(this.Message);
+      //     } else {
+
+      //           this.$swal("Thank you!", this.Message, "success");
+           
+      //            this.close();
+      //        this.$router.push('/admin/cashout') 
+      //           this.scheduleItem.accountName= "";
+      // this.scheduleItem.accountNumber= "";
+      // this.scheduleItem.paymentType= "";
+      // this.scheduleItem.amount= "";
             
           
-          }
+      //     }
           // alert(response.data.data[0].Message);
           // var r = confirm(response.data.data[0].Message);
           // if (r == true) {
