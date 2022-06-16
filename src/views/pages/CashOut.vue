@@ -15,6 +15,13 @@
           </div>
    
   </template>
+      <template v-slot:[`item.amount`]="slotData">
+     
+        {{ slotData.item.amount.toFixed(2) }}
+
+  
+
+</template>
 
       <!-- <template v-slot:[`item.amount`]="{ item }">
 
