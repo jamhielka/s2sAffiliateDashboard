@@ -22,6 +22,12 @@
   
 
 </template>
+    <template v-slot:[`item.dtApproved`]="{ item }">
+          <div v-if="!item.dtApproved==''|| !item.dtApproved==null">
+    <span>{{new Date(item.dtApproved).toLocaleString('en-CA')}}</span>
+          </div>
+   
+  </template>
 
       <!-- <template v-slot:[`item.amount`]="{ item }">
 
