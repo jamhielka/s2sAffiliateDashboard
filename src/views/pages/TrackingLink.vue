@@ -1,4 +1,5 @@
 <template>
+  <div>
   <v-data-table
     :search="search"
     :headers="headers"
@@ -28,6 +29,22 @@
         </template>
         <span>Copy</span>
       </v-tooltip>
+      <v-tooltip bottom>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+            v-bind="attrs"
+            v-on="on"
+            icon
+            color="red"
+            @click.prevent="signUp(item)"
+            target="Sign Up"
+          >
+            <v-icon>mdi-eye</v-icon>
+          </v-btn>
+        </template>
+        <span>Sign Up</span>
+      </v-tooltip>
+
     </template>
 
     <template v-slot:top>
@@ -118,16 +135,29 @@
       <v-btn color="primary" @click="initialize"> Reset </v-btn>
     </template>
   </v-data-table>
+  <SignUpLinkDialog
+        :data="signUpData"
+        :dialog="SignUpDialog.dialog"
+        @close="SignUpDialog.dialog = !SignUpDialog.dialog"
+      ></SignUpLinkDialog>
+  </div>
+      
 </template>
 <script>
 import GenerateLinkDialog from "../dialogs/GenerateLink.vue";
+import SignUpLinkDialog from "../dialogs/SignUpDialog.vue";
+
 export default {
   components: {
     GenerateLinkDialog,
+    SignUpLinkDialog,
   },
   data: () => ({
     GenerateLinkDialog: { dialog: false },
+    SignUpLinkDialog: { dialog: false },
     editDialog: { dialog: false },
+        signUpData: [],
+     SignUpDialog: { dialog: false },
     search: "",
     dialog: false,
     dialogDelete: false,
@@ -165,6 +195,7 @@ export default {
       userid: "",
     },
     approveData: [],
+
   }),
 
   computed: {
@@ -258,6 +289,7 @@ export default {
 
     close() {
       this.dialog = false;
+      //this.SignUpDialog.dialog=false;
       this.$nextTick(() => {
         this.editedItem = Object.assign({}, this.defaultItem);
         this.editedIndex = -1;
@@ -359,6 +391,11 @@ export default {
           textArea.remove();
         });
       }
+    },
+    signUp(item) {
+      console.log(item.LINK);
+      this.signUpData=item.LINK;
+      this.SignUpDialog.dialog = true;
     },
   },
 };

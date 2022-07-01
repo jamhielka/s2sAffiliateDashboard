@@ -36,7 +36,6 @@
               placeholder="Amount"
               v-model="scheduleItem.amount"
               :rules="rules2"
-         
             ></v-text-field>
           </v-form>
         </v-card-text>
@@ -119,7 +118,7 @@ export default {
       paymentType: "",
       amount: "",
     },
-    Message:"",
+    Message: "",
     defaultItem: {
       name: "",
       code: "",
@@ -136,7 +135,9 @@ export default {
 
       (v) => v >= 100 || "Cash-out should be above P100",
       (v) => v <= 5000 || "Max should not be above P5,000",
-     (v) => (v && /^[0-9]*(\.[0-9]{0,2})?$/.test(v)) || "At least 2 decimal places only."
+      (v) =>
+        (v && /^[0-9]*(\.[0-9]{0,2})?$/.test(v)) ||
+        "At least 2 decimal places only.",
     ],
   }),
   props: ["data", "dialog"],
@@ -193,37 +194,35 @@ export default {
           console.log(response.data.data[0]);
           //this.generatedlink= response.data.data[0].TrackingLink;
           //this.GenerateLinkdialog= true;
-            this.Message=response.data.data[0].Message;
+          this.Message = response.data.data[0].Message;
 
-              if (response.data.data[0].status == 0) {
-                   this.$swal("Thank you!", this.Message, "success");
-           
-                 this.close();
-             this.$router.push('/admin/cashout') 
-                this.scheduleItem.accountName= "";
-      this.scheduleItem.accountNumber= "";
-      this.scheduleItem.paymentType= "";
-      this.scheduleItem.amount= "";
-              }
-              else{
-                  this.$swal("Oops!", this.Message, "error");
-              }
-      //     if ((this.Message == "Insufficient Fund")) {
-      //        this.$swal("Oops!", this.Message, "error");
-      //      // alert(this.Message);
-      //     } else {
+          if (response.data.data[0].status == 0) {
+            this.$swal("Thank you!", this.Message, "success");
 
-      //           this.$swal("Thank you!", this.Message, "success");
-           
-      //            this.close();
-      //        this.$router.push('/admin/cashout') 
-      //           this.scheduleItem.accountName= "";
-      // this.scheduleItem.accountNumber= "";
-      // this.scheduleItem.paymentType= "";
-      // this.scheduleItem.amount= "";
-            
-          
-      //     }
+            this.close();
+            this.$router.push("/admin/cashout");
+            this.scheduleItem.accountName = "";
+            this.scheduleItem.accountNumber = "";
+            this.scheduleItem.paymentType = "";
+            this.scheduleItem.amount = "";
+          } else {
+            this.$swal("Oops!", this.Message, "error");
+          }
+          //     if ((this.Message == "Insufficient Fund")) {
+          //        this.$swal("Oops!", this.Message, "error");
+          //      // alert(this.Message);
+          //     } else {
+
+          //           this.$swal("Thank you!", this.Message, "success");
+
+          //            this.close();
+          //        this.$router.push('/admin/cashout')
+          //           this.scheduleItem.accountName= "";
+          // this.scheduleItem.accountNumber= "";
+          // this.scheduleItem.paymentType= "";
+          // this.scheduleItem.amount= "";
+
+          //     }
           // alert(response.data.data[0].Message);
           // var r = confirm(response.data.data[0].Message);
           // if (r == true) {
@@ -234,9 +233,6 @@ export default {
           //this.table.loading = false;
           console.log(e);
         });
-
-       
-         
     },
 
     closeDelete() {
