@@ -7,7 +7,7 @@
         <!-- <v-flex xs12 sm8 md4> -->
         <v-col md="8" v-if="!$vuetify.breakpoint.smAndDown" class="d-flex justify-center align-start">
           <div class="tagline">
-            Join our affiliate program and earn P250.00 per successful referral
+            Join our affiliate program and earn ₱200.00 per successful referral
           </div>
         </v-col>
 
