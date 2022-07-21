@@ -28,7 +28,73 @@
         :value="loadingData ? 0 : ReportItem.Activated"
       ></card-widget>
     </v-col>
+  
     <v-col cols="12" lg="12" md="12">
+      <div v-if="ReportItem.NoURL==0">
+ <v-card>
+      
+        <v-card-text class="text-center">
+          <v-row class="text-center">
+            <v-col cols="12">
+                 <div class="text-center">
+            First, you need to create your own affiliate link.
+          </div>
+              <v-btn depressed color="primary" @click="GeneratedLinkBTN()">
+                Create your Affiliate Link
+              </v-btn>
+            </v-col>
+
+            <GenerateLinkDialog
+              :data="approveData"
+              :dialog="editDialog.dialog"
+              @close="editDialog.dialog = !editDialog.dialog"
+            ></GenerateLinkDialog>
+          </v-row>
+        </v-card-text>
+      </v-card>
+      </div>
+      <div v-else>
+      <v-card height="100%">
+        <v-card-title> Daily count per clicks. </v-card-title>
+        <v-card-text class="text-center">
+          <v-row class="text-center">
+            <v-col cols="12">
+              <div id="chart">
+                <apexchart
+                  type="line"
+                  height="350"
+                  :options="chartOptions"
+                  :series="series"
+                ></apexchart>
+              </div>
+            </v-col>
+            <v-col>
+              <v-card>
+      
+        <v-card-text class="text-center">
+          <v-row class="text-center">
+            <v-col cols="12">
+                 <div class="text-center">
+            First, you need to create your own affiliate link.
+          </div>
+              <v-btn depressed color="primary" @click="GeneratedLinkBTN()">
+                Create your Affiliate Link
+              </v-btn>
+            </v-col>
+
+            <GenerateLinkDialog
+              :data="approveData"
+              :dialog="editDialog.dialog"
+              @close="editDialog.dialog = !editDialog.dialog"
+            ></GenerateLinkDialog>
+          </v-row>
+        </v-card-text>
+      </v-card>
+            </v-col>
+          </v-row>
+        </v-card-text>
+      </v-card>
+      </div>
       <!-- <v-card height="100%">
         <v-card-text class="text-center">
           <v-row>
@@ -72,36 +138,7 @@
         </v-card-text>
       </v-card> -->
 
-      <v-card height="100%">
-        <v-card-text class="text-center">
-          <v-row class="text-center">
-            <v-col cols="12">
-              <div id="chart">
-                <apexchart
-                  type="line"
-                  height="350"
-                  :options="chartOptions"
-                  :series="series"
-                ></apexchart>
-              </div>
-            </v-col>
-            <v-col cols="12"
-              >First, you need to create your own affiliate link</v-col
-            >
 
-            <v-col cols="12">
-              <v-btn depressed color="primary" @click="GeneratedLinkBTN()">
-                Create your Affiliate Link
-              </v-btn>
-            </v-col>
-            <GenerateLinkDialog
-              :data="approveData"
-              :dialog="editDialog.dialog"
-              @close="editDialog.dialog = !editDialog.dialog"
-            ></GenerateLinkDialog>
-          </v-row>
-        </v-card-text>
-      </v-card>
     </v-col>
   </v-row>
 </template>
@@ -145,6 +182,7 @@ export default {
     LineSeriesdata: [],
     editDialog: { dialog: false },
     series: [],
+    Ihide: false,
     chartOptions: {
       chart: {
         height: 350,
@@ -214,6 +252,7 @@ export default {
     initialize() {
       this.getReportList();
       this.TrxnCountList();
+     
     },
 
     async getReportList() {
@@ -226,7 +265,10 @@ export default {
         .then((response) => {
           //  console.log(response);
           const newArr = response.data.data[0];
-          this.ReportItem = newArr;
+       
+            this.ReportItem = newArr;
+           
+
           this.loadingData = false;
           //this.table.loading = false;
         })
@@ -246,11 +288,13 @@ export default {
           const newArr = response.data.data;
           console.log(newArr);
           for (let i = 0; i < newArr.length; i++) {
-           this.Seriesdata.push(response.data.data[i].TCOUNT);
-        
+            this.Seriesdata.push(response.data.data[i].TCOUNT);
+
             //this.LineSeriesdata.push(response.data.data[i].TCOUNT);
 
-           this.chartOptions.labels.push(moment(response.data.data[i].TDATE).format("YYYY-MM-DD"));
+            this.chartOptions.labels.push(
+              moment(response.data.data[i].TDATE).format("YYYY-MM-DD")
+            );
           }
           this.SeriesItem.name = "Clicks";
           this.SeriesItem.type = "column";
@@ -261,9 +305,9 @@ export default {
           // this.LineSeriesItem.data = this.LineSeriesdata;
           // this.series.push(this.LineSeriesItem);
           this.series.push(this.SeriesItem);
-            const newArrX = this.series;
-          console.log( newArrX);
-          console.log( this.labels);
+          const newArrX = this.series;
+          console.log(newArrX);
+          console.log(this.labels);
           //this.table.loading = false;
         })
         .catch((e) => {
